@@ -1,0 +1,472 @@
+/* ================= IMPORT FONTS CAO CẤP ================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;700;900&display=swap');
+
+:root {
+    --primary: #c00000;        /* Đỏ đậm VTC style */
+    --secondary: #1a202c;      /* Đen than */
+    --bg-body: #f7f9fc;        /* Xám xanh rất nhạt (mát mắt) */
+    --bg-card: #ffffff;
+    --text-main: #2d3748;
+    --text-sub: #718096;
+    --shadow-soft: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+    --shadow-hover: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+    --radius: 16px;
+}
+
+/* ================= RESET & GLOBAL ================= */
+body {
+    font-family: 'Inter', sans-serif; /* Font nội dung hiện đại, dễ đọc */
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    margin: 0;
+    line-height: 1.7;
+}
+
+a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+ul { padding: 0; margin: 0; list-style: none; }
+
+/* ================= HEADER SANG TRỌNG ================= */
+.header {
+    background: var(--bg-card);
+    padding: 15px 5%; /* Rộng ra 2 bên */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    z-index: 100;
+}
+
+
+.header-login a {
+    font-family: 'Inter', sans-serif;
+    color: var(--primary);
+    background: rgba(192, 0, 0, 0.05);
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    border: 1px solid transparent;
+}
+
+.header-login a:hover {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(192, 0, 0, 0.3);
+}
+
+/* ================= MENU NAV TỐI ƯU & HOÀN HẢO ================= */
+.main-nav {
+    background: var(--secondary); /* Màu nền cố định */
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* Shadow nhẹ, chuyên nghiệp */
+}
+
+.main-nav ul {
+    /* RESET CƠ BẢN */
+    list-style: none; /* Bỏ dấu chấm mặc định */	
+    margin: 0;       /* Bỏ margin mặc định của UL */
+    padding: 0;      /* Bỏ padding mặc định của UL */
+    
+    /* CĂN CHỈNH FLEXBOX */
+    display: flex;
+    justify-content: center; /* Căn giữa các mục menu theo chiều ngang */
+    align-items: stretch; /* Đảm bảo các LI/A chiếm hết chiều cao, nếu cần */
+}
+
+.main-nav li a {
+    /* ĐẢM BẢO BLOCK CHO PADDING */
+    display: block; 
+    
+    padding: 18px 25px;
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none; /* Bỏ gạch chân mặc định của link */
+    position: relative;
+    
+    /* TRANSITION GỘP */
+    transition: color 0.3s, font-weight 0.3s, background-color 0.3s;
+}
+
+/* Hiệu ứng gạch chân chạy từ giữa ra */
+.main-nav li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; 
+    left: 50%;
+    width: 0; 
+    height: 3px;
+    background: #0080c0;
+    
+    /* CHỈ ĐỊNH RÕ transition cho width và sử dụng ease-in-out cho mượt hơn */
+    transition: width 0.3s ease-in-out; 
+    transform: translateX(-50%);
+}
+
+.main-nav li a:hover,
+.main-nav li.active a { 
+    color: #fff; 
+    font-weight: 700;
+    /* THÊM: Có thể làm mờ nền khi hover để nổi bật hơn */
+    background-color: rgba(0, 0, 0, 10); 
+}
+
+.main-nav li a:hover::after,
+.main-nav li.active a::after { 
+    width: 100%; 
+}
+/* ================= LAYOUT CHÍNH ================= */
+.content-container {
+    display: flex;
+    width: 92%;
+    max-width: 1280px;
+    margin: 40px auto;
+    gap: 40px;
+}
+
+.main-content { flex: 2.5; }
+.sidebar { flex: 1; display: flex; flex-direction: column; gap: 30px; }
+
+/* ================= HERO SECTION (TIN NỔI BẬT) ================= */
+/* Biến tin nổi bật thành dạng tạp chí */
+.news-item {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    overflow: hidden; /* Để cắt ảnh khi zoom */
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 40px;
+    position: relative; /* Để đặt tag Category lên trên */
+}
+
+/* Vùng chứa ảnh có hiệu ứng zoom */
+.news-item-image-wrapper {
+    overflow: hidden;
+    position: relative;
+}
+
+.news-item .news-image {
+    width: 100%;
+    height: 450px; /* Ảnh cao hơn, đẹp hơn */
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.news-item:hover .news-image {
+    transform: scale(0.98); /* Zoom ảnh nhẹ khi hover */
+}
+
+/* Nội dung tin nổi bật */
+.news-item .news-info-highlight { /* Giả sử bạn bọc text trong div này, nếu chưa có thì CSS sẽ style trực tiếp thẻ con */
+    padding: 30px;
+    position: relative;
+    background: #fff;
+    margin-top: -60px; /* Kéo phần text đè lên ảnh một chút */
+    margin-left: 30px;
+    margin-right: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* Tiêu đề tin nổi bật */
+.news-item h3 { margin-top: 0; }
+.news-item h3 a {
+    font-family: 'Playfair Display', serif; /* Font tiêu đề sang trọng */
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--secondary);
+    line-height: 1.3;
+}
+
+.news-item h3 a:hover { color: var(--primary); }
+
+/* Tag Category (Ví dụ: Văn hóa) nằm trên ảnh */
+/* Lưu ý: Bạn cần thêm class hoặc span cho chữ (Văn hóa) trong HTML để CSS này hoạt động chuẩn nhất. 
+   Tạm thời tôi style giả định text nằm trong tiêu đề */
+
+/* ================= TIN LIST (BÊN DƯỚI) ================= */
+.news-list-item {
+    display: flex;
+    background: var(--bg-card);
+    padding: 20px;
+    border-radius: var(--radius);
+    margin-bottom: 25px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(0,0,0,0.02);
+    transition: all 0.3s ease;
+}
+
+.news-list-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.news-image-list {
+    width: 240px;
+    height: 160px;
+    border-radius: 10px;
+    margin-right: 25px;
+    object-fit: cover;
+}
+
+.news-info h3 a {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.4;
+}
+
+.news-info h3 a:hover { color: var(--primary); }
+
+.excerpt {
+    color: var(--text-sub);
+    font-size: 0.95rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Chỉ hiện 2 dòng */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+/* ================= SIDEBAR WIDGETS (TOP CHARTS) ================= */
+.widget {
+    background: var(--bg-card);
+    padding: 30px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+}
+
+.widget h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-sub);
+    border-bottom: 2px solid #edf2f7;
+    padding-bottom: 15px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Gạch chân đỏ nhỏ */
+.widget h3::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0;
+    width: 40px; height: 2px;
+    background: var(--primary);
+}
+
+/* Reset màu nền các widget cũ */
+.hot-news, .new-news, .viewed-news { background: #fff; color: inherit; }
+
+/* STYLE SỐ THỨ TỰ 1, 2, 3 CHO LIST */
+.widget ul { counter-reset: news-rank; } /* Khởi tạo bộ đếm */
+
+.widget ul li {
+    position: relative;
+    padding: 15px 0 15px 35px; /* Chừa chỗ cho số */
+    border-bottom: 1px dashed #edf2f7;
+    transition: 0.2s;
+}
+
+.widget ul li:last-child { border-bottom: none; }
+
+/* Tạo số thứ tự tự động */
+.widget ul li::before {
+    counter-increment: news-rank;
+    content: counter(news-rank);
+    position: absolute;
+    left: 0; top: 15px;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900; /* Số đậm */
+    color: #e2e8f0; /* Màu số nhạt (xám) */
+    line-height: 1;
+    font-style: italic;
+    transition: 0.3s;
+}
+
+.widget ul li:hover::before {
+    color: var(--primary); /* Hover thì số chuyển màu đỏ */
+    transform: scale(1.2);
+}
+
+.widget ul li a {
+    font-weight: 600;
+    color: var(--text-main);
+    font-size: 1rem;
+    display: block;
+    line-height: 1.4;
+}
+
+.widget ul li a:hover { color: var(--primary); }
+
+/* ================= FOOTER ================= */
+.footer {
+    /* Nền: Xanh Navy rất đậm */
+    background: #102a43; 
+    
+    /* Chữ: Xanh Lá cây Tươi hoặc Trắng (chọn màu trắng để dễ đọc nhất) */
+    color: White ; /* Hoặc #4CAF50 nếu bạn muốn màu xanh lá */
+    
+    padding: 15px 0; /* Tăng padding để footer dày hơn */
+    text-align: center;
+    font-size: 16px; /* Giảm font về 16px để cân đối hơn */
+    margin-top: 30px; /* Thêm margin-top để tách biệt với nội dung chính */
+    width: 100%; /* Đảm bảo footer chiếm toàn bộ chiều rộng */
+}
+/* ================= SIDEBAR WIDGETS (TOP CHARTS) ================= */
+.sidebar { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 30px; 
+}
+
+.widget {
+    background: var(--bg-card);
+    padding: 30px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+}
+
+.widget h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-main);
+    border-bottom: 2px solid #edf2f7;
+    padding-bottom: 12px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Gạch chân đỏ nhỏ dưới tiêu đề Widget */
+.widget h3::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0;
+    width: 40px; height: 3px;
+    background: var(--primary); 
+}
+
+/* 1. TIN ĐƯỢC XEM NHIỀU (Dùng chung cho cả 3 danh sách tin) */
+.most-viewed-list {
+    list-style: none;
+    padding: 0;
+}
+
+.most-viewed-list li {
+    display: flex;
+    align-items: flex-start;
+    padding: 12px 0; 
+    border-bottom: 1px dashed #e2e8f0; 
+}
+
+.most-viewed-list li:last-child { 
+    border-bottom: none; 
+    padding-bottom: 0; 
+}
+
+/* Số thứ tự (Rank Number) */
+.most-viewed-list .rank-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem; 
+    font-weight: 900;
+    color: var(--primary); 
+    width: 35px; 
+    text-align: center;
+    margin-right: 15px;
+    line-height: 1;
+    font-style: italic; 
+    transition: 0.3s;
+}
+
+.most-viewed-list li a {
+    font-weight: 500;
+    color: var(--text-main);
+    font-size: 1rem;
+    display: block;
+    line-height: 1.4;
+}
+
+.most-viewed-list li a:hover { 
+    color: var(--primary); 
+    text-decoration: underline;
+}
+
+/* ===================================
+   2. ĐĂNG KÝ NEWSLETTER (Đã tối ưu và chỉnh Hover)
+   =================================== */
+.newsletter {
+    background: var(--primary); 
+    padding: 35px 30px; 
+    border-radius: var(--radius);
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(192, 0, 0, 0.5); 
+    color: #ffffff; 
+    margin-top: 20px; 
+}
+
+/* Tiêu đề Widget trên nền đỏ */
+.newsletter h3 {
+    color: #ffffff; 
+    font-size: 1.45rem; 
+    font-weight: 700;
+    padding-bottom: 5px; 
+    margin-bottom: 10px; 
+    border-bottom: 3px solid #ffffff; 
+    display: inline-block;
+}
+
+.newsletter h3::after {
+    content: none; /* Bỏ gạch chân đỏ nhỏ mặc định của widget */
+}
+
+.newsletter p {
+    font-size: 1rem; 
+    color: rgba(255, 255, 255, 0.85); 
+    margin-bottom: 25px; 
+}
+
+/* Form input */
+.newsletter-form .form-control {
+    border-radius: 6px; 
+    font-size: 1rem; 
+    height: 48px; 
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+    text-align: left;
+    padding: 10px 15px; 
+}
+
+/* Nút bấm */
+.newsletter-form .btn-danger {
+    background-color: #ffffff; 
+    color: var(--primary); 
+    border: 1px solid #ffffff;
+    font-weight: 700;
+    font-size: 1.1rem; 
+    padding: 12px 0; 
+    margin-top: 18px; 
+    transition: all 0.2s ease;
+    width: 100%; 
+}
+
+.newsletter-form .btn-danger:hover {
+    /* SỬA HOVER: Dùng màu nền đỏ nhạt/hồng nhẹ (dễ nhìn) */
+    background-color: #ffcccc; /* Màu đỏ nhạt */
+    color: var(--primary); /* Giữ màu chữ đỏ đậm */
+    border-color: #ffcccc;
+}
