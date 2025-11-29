@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <%-- 4. CSS Tùy chỉnh (Áp dụng Glassmorphism và màu sắc cho nền tối) --%>
+    <%-- 4. CSS Tùy chỉnh (Áp dụng Glassmorphism và màu sắc cho nền tối) --%>
+    <%-- 4. CSS Tùy chỉnh (Áp dụng Glassmorphism và màu sắc cho nền tối) --%>
     <style>
         /* GLOBAL: Font, Nền Glassmorphism */
         html, body {
