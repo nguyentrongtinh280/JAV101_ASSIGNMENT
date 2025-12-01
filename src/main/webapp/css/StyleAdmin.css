@@ -1,0 +1,119 @@
+body {
+    font-family: Arial, sans-serif; 
+}
+
+/* --- 1. Container và Layout chung --- */
+.crud-container {
+    max-width: 95%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+.crud-form, .crud-table {
+    margin-bottom: 30px;
+}
+h2 {
+    color: #d00000;
+    border-bottom: 2px solid #d00000;
+    padding-bottom: 10px;
+}
+
+/* --- 2. Form Styling --- */
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+/* Styling cho tất cả các loại input, textarea, select */
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="date"],
+.form-group input[type="tel"],
+.form-group input[type="email"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* --- 3. Form Layout (Cột) - Dùng cho NguoiDung.jsp --- */
+.form-group.two-columns {
+    display: flex;
+    flex-wrap: wrap;
+}
+.form-field-half {
+    flex: 0 0 48%; 
+    margin-right: 4%;
+}
+.form-field-half:nth-child(2n) {
+    margin-right: 0;
+}
+/* Sửa lỗi căn chỉnh cho trường Giới tính trong NguoiDung.jsp */
+.form-field-half.gender-group {
+    display: flex; 
+    align-items: flex-end;
+}
+.form-field-half.gender-group label {
+    margin-right: 20px;
+    margin-bottom: 0; /* Loại bỏ margin-bottom mặc định cho label bên trong flex item */
+}
+
+
+/* --- 4. Action Buttons --- */
+.form-actions button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.btn-save { background-color: #28a745; color: white; }
+.btn-new { background-color: #007bff; color: white; }
+.btn-delete { background-color: #dc3545; color: white; }
+.btn-save:hover, .btn-new:hover, .btn-delete:hover { opacity: 0.9; }
+
+/* --- 5. Table Styling --- */
+.crud-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.crud-table th, .crud-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+.crud-table th {
+    background-color: #d00000; /* Màu đỏ của menu */
+    color: white;
+    font-size: 1em;
+}
+/* Dùng cho bảng Người dùng do cần ít padding hơn và font nhỏ hơn */
+.crud-table.user-table th, .crud-table.user-table td {
+    padding: 10px;
+    font-size: 0.9em;
+}
+.crud-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.action-links a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #007bff;
+}
+.action-links a:hover {
+    text-decoration: underline;
+}
+.no-data {
+    text-align: center; 
+    color: #999;
+}
