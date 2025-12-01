@@ -9,9 +9,9 @@
     <meta charset="UTF-8">
     <title>Quản lý Người Dùng</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/StyleAdmin.css">
-</head>
-<body>
     <link rel="stylesheet" href="css/style.css">
+</head>
+<body>   
     <jsp:include page="MenuAdmin.jsp" /> 
 
     <div class="crud-container">
@@ -156,8 +156,6 @@
                 </tbody>
             </table>
         </div>
-
-    </div>
 
     <style>
         .alert { padding: 10px; margin: 10px 0; border-radius: 5px; }
