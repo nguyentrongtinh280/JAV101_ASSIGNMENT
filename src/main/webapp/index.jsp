@@ -182,6 +182,7 @@
         <section class="main-content">
             <h2>Tin Nổi Bật Trên Trang Nhất</h2>
 
+            <%-- GIỮ NGUYÊN 2 BÀI TIN TĨNH NẾU BẠN MUỐN --%>
             <article class="news-item">
                 <img src="img/hinh1.png" alt="Ảnh Bản tin 1" class="news-image">
                 
@@ -212,19 +213,25 @@
             
             <c:if test="${not empty requestScope.newsList}">
                 <c:forEach var="item" items="${requestScope.newsList}">
-                    <article class="news-item">
-                        <img src="${pageContext.request.contextPath}/img/${item.image}" alt="Ảnh Bản tin ${item.id}" class="news-image">
-                        <div class="news-info">
-                            <h3><a href="${pageContext.request.contextPath}/detail?id=${item.id}">${item.title}</a></h3>
-                            <p class="excerpt">${item.excerpt}</p>
-                            <p class="meta">
-                                <span>Ngày đăng: ${item.date}</span>
-                                <span>Tác giả: ${item.author}</span>
-                            </p>
-                        </div>
-                    </article>
+                    
+                    <%-- Kiểm tra điều kiện: Nếu item.home là TRUE (DB là 1) thì hiển thị --%>
+                    <c:if test="${item.home}"> 
+                        <article class="news-item">
+                            <img src="${pageContext.request.contextPath}/img/${item.image}" alt="Ảnh Bản tin ${item.id}" class="news-image">
+                            <div class="news-info">
+                                <h3><a href="${pageContext.request.contextPath}/detail?id=${item.id}">${item.title}</a></h3>
+                                <p class="excerpt">${item.excerpt}</p>
+                                <p class="meta">
+                                    <span>Ngày đăng: ${item.date}</span>
+                                    <span>Tác giả: ${item.author}</span>
+                                </p>
+                            </div>
+                        </article>
+                    </c:if>
+                    
                 </c:forEach>
             </c:if>
+            <%-- 🔥 KẾT THÚC PHẦN SỬA ĐỔI 🔥 --%>
             
         </section>
 
