@@ -3,7 +3,7 @@
     
 <nav class="main-nav">
     <ul>
-        <li><a href="${pageContext.request.contextPath}/admin">Trang chủ</a></li>
+        <li><a href="${pageContext.request.contextPath}">Trang chủ</a></li>
         
         <li><a href="${pageContext.request.contextPath}/tin-tuc">Tin tức</a></li>
         <li><a href="${pageContext.request.contextPath}/loai-tin">Loại tin</a></li>
