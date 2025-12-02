@@ -68,7 +68,6 @@ public class TinTucController extends HttpServlet {
         
         req.getRequestDispatcher("/view/admin/TinTuc.jsp").forward(req, resp);
     }
-    
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
@@ -140,7 +139,7 @@ public class TinTucController extends HttpServlet {
             session.setAttribute("message", actionType + " bản tin thành công!");
         } else {
             // Thông báo lỗi chi tiết hơn (ví dụ: lỗi khóa ngoại)
-            session.setAttribute("error", actionType + " bản tin thất bại. Lỗi Khóa ngoại: Tên tác giả (**" + finalAuthor + "**) có thể không tồn tại trong bảng Users hoặc lỗi CSDL khác.");
+        	session.setAttribute("error", actionType + " bản tin thất bại. Lỗi Khóa ngoại: Tên tác giả (**" + finalAuthor + "**) có thể không tồn tại trong bảng Users hoặc lỗi CSDL khác.");
         }
 
         // Chuyển hướng về GET để tải lại danh sách

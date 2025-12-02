@@ -47,8 +47,10 @@ public class NewsDAO {
                 news.setId(rs.getInt("Id"));
                 news.setTitle(rs.getString("Title"));
                 news.setContent(rs.getString("content"));
+                
                 // >>> THÊM DÒNG NÀY ĐỂ GÁN CATEGORYID <<<
                 news.setCategoryId(rs.getInt("CategoryId")); // <-- Lỗi đã được khắc phục ở đây!
+                
                 news.setImage(rs.getString("Image"));
                 news.setPostedDate(new java.util.Date(rs.getDate("PostedDate").getTime())); // SỬA: Dùng java.util.Date
                 news.setAuthor(rs.getString("Author"));
@@ -157,7 +159,7 @@ public class NewsDAO {
      */
 	public List<News> getFeaturedNews() {
 		List<News> list = new ArrayList<>();
-	    // Truy vấn: Lấy tất cả tin tức có Home = 1 và sắp xếp theo ngày đăng mới nhất
+		// Truy vấn: Lấy tất cả tin tức có Home = 1 và sắp xếp theo ngày đăng mới nhất
 	    String sql = "SELECT * FROM news WHERE Home = 1 ORDER BY PostedDate DESC"; 
 	    
 	    try (Connection conn = DBConnection.getConnection();
