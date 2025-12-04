@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %> 
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %> 
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,8 +14,8 @@
     <title>Trang Chủ - Góc Nhìn Báo Chí </title>
     <link rel="stylesheet" href="css/style.css">
     
-  <style>
-        /* 1. Căn chỉnh Header (Sử dụng Flexbox) */
+    <style>
+/* 1. Căn chỉnh Header (Sử dụng Flexbox) */
         .header {
             display: flex; 
             justify-content: space-between;
@@ -137,10 +139,9 @@
 </head>
 <body>
     
-    <%-- 🔥 KHỐI HIỂN THỊ FLASH MESSAGE (Sau khi Đăng nhập/Đăng xuất thành công) --%>
+    <%-- KHỐI HIỂN THỊ FLASH MESSAGE --%>
     <div class="alert-container container"> 
         <c:if test="${not empty sessionScope.flashMessage}">
-            <%-- THÊM ID ĐỂ DÙNG TRONG JAVASCRIPT (Đã có sẵn Bootstrap CSS) --%>
             <div id="autoDismissAlert" class="alert alert-success alert-dismissible fade show" role="alert">
                 ${sessionScope.flashMessage}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -152,25 +153,20 @@
     <header class="header">
     	<img src="${pageContext.request.contextPath}/img/lgo.png" alt="Logo ABC News" class="header-image">
         
-        <%-- 🔥 LOGIC JSTL HIỂN THỊ TÊN NGƯỜI DÙNG HOẶC NÚT ĐĂNG NHẬP --%>
+        <%-- LOGIC JSTL HIỂN THỊ TÊN NGƯỜI DÙNG HOẶC NÚT ĐĂNG NHẬP --%>
         <div class="header-login">
             <c:choose>
-                <%-- Ưu tiên sử dụng loggedInUser nếu bạn có set cả hai biến --%>
                 <c:when test="${not empty sessionScope.loggedInUser}"> 
-                    <%-- HIỂN THỊ TÊN VÀ NÚT ĐĂNG XUẤT --%>
                     Xin chào, 
                         <strong>${sessionScope.loggedInUser.fullname}</strong>
                     <a href="${pageContext.request.contextPath}/logout" class="btn btn-sm btn-danger ms-2">Đăng xuất</a>
                 </c:when>
-                <%-- Nếu không có loggedInUser, kiểm tra currentUser (chỉ giữ lại 1 trong 2 biến trong Servlet) --%>
                 <c:when test="${not empty sessionScope.currentUser}"> 
-                    <%-- HIỂN THỊ TÊN VÀ NÚT ĐĂNG XUẤT --%>
                     Xin chào  
                         <strong>${sessionScope.currentUser.fullname}</strong>
                     <a href="${pageContext.request.contextPath}/logout" class="btn btn-sm btn-danger ms-2">Đăng xuất</a>
                 </c:when>
                 <c:otherwise>
-                    <%-- HIỂN THỊ NÚT ĐĂNG NHẬP --%>
                     <a href="${pageContext.request.contextPath}/login" class="btn btn-sm btn-primary">Đăng nhập</a>
                 </c:otherwise>
             </c:choose>
@@ -178,60 +174,57 @@
     </header>
 
     <jsp:include page="menu.jsp" />
-<main class="content-container">
+    
+    <main class="content-container">
         <section class="main-content">
             <h2>Tin Nổi Bật Trên Trang Nhất</h2>
 
-            <%-- GIỮ NGUYÊN 2 BÀI TIN TĨNH NẾU BẠN MUỐN --%>
-            <article class="news-item">
-                <img src="img/hinh1.png" alt="Ảnh Bản tin 1" class="news-image">
-                
-                <div class="news-info">
-                    <h3><a href="detail.jsp?id=1">Tiêu đề bản tin nổi bật 1 (Văn hóa)</a></h3>
-                    <p class="excerpt">Trích lấy phần đầu của nội dung bản tin. Đây là đoạn tóm tắt ngắn gọn để độc giả có thể nắm bắt nội dung chính. </p>
-                    
-                    <p class="meta">
-                        <span>Ngày đăng: 20/11/2025</span>
-                        <span>Tác giả: Nguyễn Văn A</span>
-                    </p>
-                </div>
-            </article>
-            
-            <article class="news-item">
-                <img src="img/hinh2.png" alt="Ảnh Bản tin 2" class="news-image">
-                
-                <div class="news-info">
-                    <h3><a href="detail.jsp?id=2">Tiêu đề bản tin nổi bật 2 (Pháp luật)</a></h3>
-                    <p class="excerpt">Trích lấy phần đầu của nội dung bản tin. Đoạn trích này chỉ nên có số ký tự phù hợp để hiển thị đẹp trên trang chủ. </p>
-                    
-                    <p class="meta">
-                        <span>Ngày đăng: 19/11/2025</span>
-                        <span>Tác giả: Trần Thị B</span>
-                    </p>
-                </div>	
-            </article>
-            
-            <c:if test="${not empty requestScope.newsList}">
-                <c:forEach var="item" items="${requestScope.newsList}">
-                    
-                    <%-- Kiểm tra điều kiện: Nếu item.home là TRUE (DB là 1) thì hiển thị --%>
-                    <c:if test="${item.home}"> 
+            <%-- BẮT ĐẦU: HIỂN THỊ TIN NỔI BẬT LẤY TỪ DB (HOME = 1) --%>
+            <c:choose>
+                <c:when test="${not empty featuredNews}">
+                    <c:forEach var="item" items="${featuredNews}">
+                        
                         <article class="news-item">
-                            <img src="${pageContext.request.contextPath}/img/${item.image}" alt="Ảnh Bản tin ${item.id}" class="news-image">
+           				<img src="${pageContext.request.contextPath}/img/${item.image}" class="news-image-list" alt="${item.title}">
+                          <%--   
+                            ⭐ CHỈNH SỬA LỖI HÌNH ẢNH: Trỏ URL ảnh đến ImageServlet ⭐
+                            <c:set var="imagePath" value="${pageContext.request.contextPath}/img/default-news.png" />
+                            
+                            <c:if test="${not empty item.image}">
+                                Dùng Servlet để lấy file theo tên đã lưu trong DB
+                                <c:set var="imagePath" value="${pageContext.request.contextPath}/external-images/${item.image}" />
+                            </c:if>
+                            
+                            <img src="${imagePath}" alt="Ảnh Bản tin ${item.id}" class="news-image">
+                            ⭐ KẾT THÚC CHỈNH SỬA ⭐ --%>
+                            
                             <div class="news-info">
-                                <h3><a href="${pageContext.request.contextPath}/detail?id=${item.id}">${item.title}</a></h3>
-                                <p class="excerpt">${item.excerpt}</p>
+                                <h3>
+                                    <a href="${pageContext.request.contextPath}/detail?id=${item.id}">${item.title}</a>
+                                </h3>
+                                
+                                <%-- Cắt ngắn nội dung để làm đoạn trích (excerpt) --%>
+                                <p class="excerpt">
+                                    ${item.content.length() > 200 ? item.content.substring(0, 200).concat("...") : item.content}
+                                </p>
+                                
                                 <p class="meta">
-                                    <span>Ngày đăng: ${item.date}</span>
+                                    <span>Ngày đăng: 
+                                        <%-- Định dạng ngày tháng --%>
+                                        <fmt:formatDate value="${item.postedDate}" pattern="dd/MM/yyyy"/>
+                                    </span>
                                     <span>Tác giả: ${item.author}</span>
                                 </p>
                             </div>
                         </article>
-                    </c:if>
-                    
-                </c:forEach>
-            </c:if>
-            <%-- 🔥 KẾT THÚC PHẦN SỬA ĐỔI 🔥 --%>
+                        
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <p>Hiện không có tin tức nổi bật nào được đánh dấu để hiển thị trên trang nhất.</p>
+                </c:otherwise>
+            </c:choose>
+            <%-- KẾT THÚC: HIỂN THỊ TIN NỔI BẬT LẤY TỪ DB --%>
             
         </section>
 

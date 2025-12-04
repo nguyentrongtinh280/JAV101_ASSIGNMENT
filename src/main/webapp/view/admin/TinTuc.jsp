@@ -37,8 +37,8 @@
 	
 	    <div class="crud-form">
 	        <h3>Thông Tin Bản Tin</h3>
-	        <%-- ACTION TRỎ ĐÚNG VỀ CONTROLLER --%>
-	        <form action="${pageContext.request.contextPath}/tin-tuc" method="post" id="newsForm">
+	        <%-- SỬA: THÊM enctype="multipart/form-data" để xử lý upload file --%>
+	        <form action="${pageContext.request.contextPath}/tin-tuc" method="post" id="newsForm" enctype="multipart/form-data">
 	            
 	            <div class="form-group">
 	                <label for="id">Mã bản tin:</label>
@@ -71,9 +71,17 @@
 	                <label for="author">Tên Tác Giả :</label>
 					<%-- Đã sửa nhãn và id/name cho Tác giả --%>
 					<input type="text" id="author" name="author" required ></div>
+	            
 	            <div class="form-group">
 	                <label for="image">Hình ảnh/Video:</label>
-	                <input type="text" id="image" name="image" >
+	                <%-- SỬA: Đổi sang type="file" --%>
+	                <input type="file" id="image" name="image" >
+	                
+	                <%-- THÊM: Input ẩn để giữ lại URL ảnh cũ khi Sửa (trong trường hợp người dùng không chọn tệp mới) --%>
+	                <input type="hidden" id="currentImageURL" name="currentImageURL" value="">
+	                
+	                <%-- THÊM: Khu vực hiển thị URL ảnh hiện tại khi đang ở chế độ Sửa --%>
+	                <div id="imagePreview" style="margin-top: 5px; font-size: 0.9em; color: #555;"></div>
 	            </div>
 	            
 	            <div class="form-group">
@@ -168,17 +176,33 @@
 	    function loadNewsForEdit(id) {
 	        // Sử dụng data attribute để lấy dữ liệu
 	        var row = document.querySelector('tr[data-id="' + id + '"]');
+	        var imagePreviewDiv = document.getElementById('imagePreview');
+	        
 	        if (row) {
 	            document.getElementById('id').value = id;
 	            document.getElementById('title').value = row.dataset.title;
 	            document.getElementById('content').value = row.dataset.content;
-	            document.getElementById('image').value = row.dataset.image;
 	            document.getElementById('author').value = row.dataset.author;
 	            document.getElementById('categoryid').value = row.dataset.categoryid;
+	            
+	            // LẤY URL ẢNH HIỆN TẠI VÀ THIẾT LẬP CHO TRƯỜNG ẨN
+	            var currentImage = row.dataset.image;
+	            document.getElementById('currentImageURL').value = currentImage;
+	            
+	            // HIỂN THỊ URL ảnh cũ (Chỉ xem, không thể điền vào input file)
+	            if (currentImage) {
+	                imagePreviewDiv.innerHTML = 'Ảnh/Video hiện tại: <a href="' + currentImage + '" target="_blank">' + currentImage + '</a>' + 
+	                                            '<br>Chọn tệp mới để thay thế.';
+	            } else {
+	                imagePreviewDiv.innerHTML = 'Chưa có Ảnh/Video hiện tại. Vui lòng chọn tệp.';
+	            }
 	            
 	            // Xử lý checkbox 'home'
 	            var homeCheckbox = document.getElementById('home');
 	            homeCheckbox.checked = (row.dataset.home === 'true');
+	            
+	            // ĐẶT LẠI INPUT FILE VỀ TRẠNG THÁI RỖNG
+	            document.getElementById('image').value = '';
 	            
 	            // ĐỔI TEXT NÚT THÀNH CẬP NHẬT/LƯU
 	            document.querySelector('.btn-save').textContent = 'Cập nhật';
@@ -192,7 +216,9 @@
 	    function resetForm() {
 	        document.getElementById('newsForm').reset();
 	        document.getElementById('id').value = ''; // Đảm bảo ID trống để kích hoạt Add
-	        document.querySelector('.btn-save').textContent = 'Thêm'; // Đổi lại thành Lưu
+	        document.getElementById('currentImageURL').value = ''; // Xóa URL ảnh cũ
+	        document.getElementById('imagePreview').innerHTML = ''; // Xóa preview
+	        document.querySelector('.btn-save').textContent = 'Lưu'; // Đổi lại thành Lưu
 	    }
 	    
 	    // Gọi resetForm() khi trang được tải lần đầu để đảm bảo nút có text "Lưu" nếu form rỗng
