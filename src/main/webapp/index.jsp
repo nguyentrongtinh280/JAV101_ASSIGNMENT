@@ -186,17 +186,7 @@
                         
                         <article class="news-item">
            				<img src="${pageContext.request.contextPath}/img/${item.image}" class="news-image-list" alt="${item.title}">
-                          <%--   
-                            ⭐ CHỈNH SỬA LỖI HÌNH ẢNH: Trỏ URL ảnh đến ImageServlet ⭐
-                            <c:set var="imagePath" value="${pageContext.request.contextPath}/img/default-news.png" />
-                            
-                            <c:if test="${not empty item.image}">
-                                Dùng Servlet để lấy file theo tên đã lưu trong DB
-                                <c:set var="imagePath" value="${pageContext.request.contextPath}/external-images/${item.image}" />
-                            </c:if>
-                            
-                            <img src="${imagePath}" alt="Ảnh Bản tin ${item.id}" class="news-image">
-                            ⭐ KẾT THÚC CHỈNH SỬA ⭐ --%>
+                       
                             
                             <div class="news-info">
                                 <h3>
