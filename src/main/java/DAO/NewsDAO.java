@@ -55,6 +55,7 @@ public class NewsDAO {
                 news.setPostedDate(new java.util.Date(rs.getDate("PostedDate").getTime())); // SỬA: Dùng java.util.Date
                 news.setAuthor(rs.getString("Author"));
                 news.setViewCount(rs.getInt("viewCount"));
+                news.setHome(rs.getBoolean("Home"));
                 list.add(news);
             }
             

@@ -7,11 +7,11 @@ public class User {
 	private String fullname;
 	private String email;
 	private String password;
-	private int role; // Đã sửa: Role nên là int (TINYINT(1))
-	private Date birthday; // Đã thêm: Cột Birthday
-	private int gender;    // Đã thêm: Cột Gender (TINYINT(1))
+	private int role; 
+	private Date birthday; 
+	private int gender;    
+	private String mobile;
 
-	// Đã loại bỏ: Thuộc tính Status
 
 	public int getId() {
 		return id;
@@ -45,7 +45,6 @@ public class User {
 		this.password = password;
 	}
 
-	// Đã sửa: Getter/Setter cho Role là int
 	public int getRole() {
 		return role;
 	}
@@ -54,7 +53,6 @@ public class User {
 		this.role = role;
 	}
     
-    // Đã thêm: Getter/Setter cho Birthday
     public Date getBirthday() {
         return birthday;
     }
@@ -63,7 +61,6 @@ public class User {
         this.birthday = birthday;
     }
 
-    // Đã thêm: Getter/Setter cho Gender
     public int getGender() {
         return gender;
     }
@@ -71,4 +68,12 @@ public class User {
     public void setGender(int gender) {
         this.gender = gender;
     }
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
 }

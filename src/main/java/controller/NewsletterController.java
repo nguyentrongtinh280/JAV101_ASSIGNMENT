@@ -82,7 +82,7 @@ public class NewsletterController extends HttpServlet {
                 req.setAttribute("error", "Email đã tồn tại!");
                 req.setAttribute("item", form);
                 req.setAttribute("list", dao.selectAll());
-                req.getRequestDispatcher("/view/admin/Newsletter.jsp").forward(req, resp);
+req.getRequestDispatcher("/view/admin/Newsletter.jsp").forward(req, resp);
                 return;
             }
 

@@ -1,10 +1,11 @@
-<%-- File: NguoiDung.jsp (Đã sửa) --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,…;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Quản lý Người Dùng</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/StyleAdmin.css">
@@ -74,7 +75,7 @@
 			            <label for="mobile">Điện thoại:</label>
 			            <input type="tel" id="mobile" name="mobile" value="${editUser != null ? editUser.mobile : param.mobile}">
 			        </div>
-			        <div class="form-field-half">
+<div class="form-field-half">
 			            <label for="birthday">Ngày sinh:</label>
 			            <input type="date" id="birthday" name="birthday" value="${editUser != null ? editUser.birthday : param.birthday}">
 			        </div>
@@ -135,7 +136,7 @@
                                     <td>${u.birthday}</td>
                                     <td>${u.gender == 0 ? "Nam" : "Nữ"}</td>
                                     <td>${u.email}</td>
-                                    <td>${u.role == 0 ? "Phóng viên" : "Quản trị viên"}</td>
+									<td>${u.role == 0 ? "Phóng viên" : "Quản trị viên"}</td>
                                     <td>
 									    <a href="${pageContext.request.contextPath}/nguoi-dung?action=edit&id=${u.id}">Sửa</a> |
 									    <a href="${pageContext.request.contextPath}/nguoi-dung?action=delete&id=${u.id}" 
