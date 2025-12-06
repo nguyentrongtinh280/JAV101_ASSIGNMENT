@@ -1,76 +1,74 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-   /* 1. Căn chỉnh Header (Sử dụng Flexbox) */
-        .header {
-            display: flex; 
-            justify-content: space-between; /* Đẩy logo và nút đăng nhập ra hai bên */
-            align-items: center; /* Căn giữa theo chiều dọc - GIÚP HÌNH THẲNG HÀNG */
-            padding: 15px 30px; 
-            background-color: #ffffff; 
-            border-bottom: 1px solid #eeeeee; 
-            height: 80px; /* Chiều cao cố định cho header */
-        }
-
-        /* 2. Điều chỉnh kích thước Logo cho VỪA PHẢI */
-        .header-image {
-            height: 120px; /* Chiều cao tối đa vừa phải */
-            width: 150px; /* Giữ tỷ lệ khung hình */
-        }
-        
-</style>
-<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
-    <title>Danh sách tin tức</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Tin Văn Hóa</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 
 <body>
 
 <header class="header">
-    	<img src="img/lgo.png" alt="Logo ABC News" class="header-image">
-        
-        <div class="header-login">
-            <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
-        </div>
-        
-    </header>
-	
-	<jsp:include page="/menu.jsp" />
-	
-	<main class="content-container">
-	    <section class="main-content">
-			<!-- Tin Văn hóa -->
-			<article class="news-list-item">
-			    <img src="img/hinh4.png" class="news-image-list">
-			    <div class="news-info">
-			        <h3><a href="detail.jsp?id=vh1">Sự kiện văn hóa đặc sắc 2025</a></h3>
-			        <p class="excerpt">Một số hoạt động văn hóa nổi bật diễn ra trong năm...</p>
-			        <p class="meta">20/11/2025 | PV Văn Hóa 1</p>
-			    </div>
-			</article>
-			
-			<article class="news-list-item">
-			    <img src="img/hinh5.png" class="news-image-list">
-			    <div class="news-info">
-			        <h3><a href="detail.jsp?id=vh2">Lễ hội truyền thống khắp 3 miền</a></h3>
-			        <p class="excerpt">Truyền thống văn hóa Việt Nam luôn được lưu giữ...</p>
-			        <p class="meta">19/11/2025 | PV Văn Hóa 2</p>
-			    </div>
-			</article>
-	
-	    </section>
-	
-	    <jsp:include page="/sidebar.jsp" />
-	
-	</main>
-	
-	<footer class="footer">
-	        <p>Góc Nhìn Báo Chí</p>
-    </footer>
+    <img src="${pageContext.request.contextPath}/img/lgo.png" class="header-image">
+    <div class="header-login">
+        <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
+    </div>
+</header>
+
+<jsp:include page="/menu.jsp" />
+
+<main class="content-container">
+
+    <section class="main-content">
+
+        <h2 style="margin-bottom: 25px; font-family:'Playfair Display', serif;">
+            Tin Văn Hóa
+        </h2>
+
+        <c:choose>
+
+            <c:when test="${not empty vanHoaList}">
+                <c:forEach var="item" items="${vanHoaList}">
+                    <article class="news-list-item">
+                        <img src="${pageContext.request.contextPath}/upload_img/news/${item.image}"
+                             class="news-image-list">
+
+                        <div class="news-info">
+                            <h3><a href="chi-tiet-tin?id=${item.id}">${item.title}</a></h3>
+
+                            <p class="excerpt">
+                                ${fn:substring(item.content, 0, 150)}...
+                            </p>
+
+                            <p class="meta">
+                                <fmt:formatDate value="${item.postedDate}" pattern="dd/MM/yyyy" />
+                                | PV Văn Hóa
+                            </p>
+                        </div>
+                    </article>
+                </c:forEach>
+            </c:when>
+
+            <c:otherwise>
+                <p>Hiện chưa có tin văn hóa nào.</p>
+            </c:otherwise>
+
+        </c:choose>
+
+    </section>
+
+    <jsp:include page="/sidebar.jsp" />
+
+</main>
+
+<footer class="footer">
+    <p>Góc Nhìn Báo Chí</p>
+</footer>
 
 </body>
 </html>

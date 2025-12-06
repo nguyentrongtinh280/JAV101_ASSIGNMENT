@@ -1,9 +1,7 @@
 package controller;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URLDecoder;
-import java.util.List;
 
 import DAO.NewsletterDAO;
 import Entity.Newsletter;
@@ -15,16 +13,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.beanutils.BeanUtils;
 
 @WebServlet({
-	"/newsletter",
+    "/newsletter",
     "/newsletter/edit/*",
     "/newsletter/create",
     "/newsletter/update",
     "/newsletter/delete",
-    "/newsletter/reset"	
+    "/newsletter/reset"
 })
 public class NewsletterController extends HttpServlet {
-	
-	private NewsletterDAO dao = new NewsletterDAO();
+
+    private NewsletterDAO dao = new NewsletterDAO();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -82,7 +80,7 @@ public class NewsletterController extends HttpServlet {
                 req.setAttribute("error", "Email đã tồn tại!");
                 req.setAttribute("item", form);
                 req.setAttribute("list", dao.selectAll());
-req.getRequestDispatcher("/view/admin/Newsletter.jsp").forward(req, resp);
+                req.getRequestDispatcher("/view/admin/Newsletter.jsp").forward(req, resp);
                 return;
             }
 
