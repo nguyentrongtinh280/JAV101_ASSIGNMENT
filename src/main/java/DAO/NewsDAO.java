@@ -200,4 +200,48 @@ public class NewsDAO {
 	    }
 	    return list;
 	}
+	
+	// Lấy danh sách tin theo CategoryId
+	public List<News> getNewsByCategory(int categoryId) {
+	    List<News> list = new ArrayList<>();
+	    String sql = "SELECT * FROM News WHERE CategoryId = ? ORDER BY PostedDate DESC";
+
+	    try (Connection conn = DBConnection.getConnection();
+	         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+	        ps.setInt(1, categoryId);
+
+	        try (ResultSet rs = ps.executeQuery()) {
+	            while (rs.next()) {
+	                list.add(mapResultSetToNews(rs));
+	            }
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+	
+	
+	public List<News> getAllNewsMoiNhat() {
+	    List<News> list = new ArrayList<>();
+	    String sql = "SELECT * FROM News ORDER BY PostedDate DESC";
+
+	    try (Connection con = DBConnection.getConnection();
+	         PreparedStatement ps = con.prepareStatement(sql);
+	         ResultSet rs = ps.executeQuery()) {
+
+	        while (rs.next()) {
+	            list.add(mapResultSetToNews(rs));  // Dùng lại hàm map chung
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+
+
+
 }

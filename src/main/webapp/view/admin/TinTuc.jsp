@@ -1,10 +1,10 @@
 <%-- File: TinTuc.jsp --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- Thêm JSTL Core để sử dụng vòng lặp và điều kiện --%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<%-- Thêm JSTL FMT để định dạng ngày tháng --%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,92 +12,87 @@
 <meta charset="UTF-8">
 <title>Quản lý Tin Tức</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/StyleAdmin.css">
-<%-- Thêm Font Awesome để hiển thị icon --%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
 </head>
 <body>
-    <link rel="stylesheet" href="css/style.css">
-    <%-- Đảm bảo đường dẫn này đúng nếu MenuAdmin nằm ngoài thư mục view/admin --%>
+	<link rel="stylesheet" href="css/style.css">
     <jsp:include page="MenuAdmin.jsp" /> 
 
 	<div class="crud-container">
-	
-	    <h2>
-	        <i class="fa fa-newspaper-o"></i> Quản Lý Tin Tức
-	    </h2>
+	    <h2><i class="fa fa-newspaper-o"></i> Quản Lý Tin Tức</h2>
 	    
-	    <%-- HIỂN THỊ THÔNG BÁO FLASH MESSAGE TỪ SESSION --%>
-	    <%-- ĐÃ THÊM STYLE font-weight: bold; --%>
+	    <!-- Flash message -->
 	    <c:if test="${not empty message}">
 	        <div class="alert success" style="font-weight: bold;">${message}</div>
 	    </c:if>
+
 	    <c:if test="${not empty error}">
 	        <div class="alert error" style="font-weight: bold;">${error}</div>
 	    </c:if>
-	
+
 	    <div class="crud-form">
 	        <h3>Thông Tin Bản Tin</h3>
-	        <%-- SỬA: THÊM enctype="multipart/form-data" để xử lý upload file --%>
-	        <form action="${pageContext.request.contextPath}/tin-tuc" method="post" id="newsForm" enctype="multipart/form-data">
-	            
+
+	        <!-- FORM MULTIPART -->
+	        <form action="${pageContext.request.contextPath}/tin-tuc" 
+	              method="post" id="newsForm" enctype="multipart/form-data">
+
 	            <div class="form-group">
 	                <label for="id">Mã bản tin:</label>
-	                <%-- ID không cần value vì nó được điền bằng JS khi Sửa --%>
-	                <input type="text" id="id" name="id"  readonly> 
+	                <input type="text" id="id" name="id" readonly>
 	            </div>
-	
+
 	            <div class="form-group">
 	                <label for="title">Tiêu đề:</label>
-	                <input type="text" id="title" name="title" required >
+	                <input type="text" id="title" name="title" required>
 	            </div>
-	
+
 	            <div class="form-group">
 	                <label for="categoryid">Loại tin:</label>
 	                <select id="categoryid" name="categoryid" required>
 	                    <option value="">-- Chọn Loại tin --</option>
-	                     <option value="1">Thời sự</option>
+	                    <option value="1">Thời sự</option>
 	                    <option value="2">Văn hóa</option>
 	                    <option value="3">Pháp luật</option>
 	                    <option value="4">Thể thao</option>
-	                    <option value="5">Giáo dục</option>
+	                    <option value="7">Giáo dục</option>
 	                </select>
 	            </div>
-	            
+
 	            <div class="form-group">
 	                <label for="content">Nội dung:</label>
-	                <textarea id="content" name="content" rows="6" required ></textarea>
+	                <textarea id="content" name="content" rows="6" required></textarea>
 	            </div>
-				 <div class="form-group">
-	                <label for="author">Tên Tác Giả :</label>
-					<%-- Đã sửa nhãn và id/name cho Tác giả --%>
-					<input type="text" id="author" name="author" required ></div>
-	            
+
 	            <div class="form-group">
-	                <label for="image">Hình ảnh/Video:</label>
-	                <%-- SỬA: Đổi sang type="file" --%>
-	                <input type="file" id="image" name="image" >
-	                
-	                <%-- THÊM: Input ẩn để giữ lại URL ảnh cũ khi Sửa (trong trường hợp người dùng không chọn tệp mới) --%>
-	                <input type="hidden" id="currentImageURL" name="currentImageURL" value="">
-	                
-	                <%-- THÊM: Khu vực hiển thị URL ảnh hiện tại khi đang ở chế độ Sửa --%>
+	                <label for="author">Tên Tác Giả:</label>
+	                <input type="text" id="author" name="author" required>
+	            </div>
+
+	            <div class="form-group">
+	                <label for="image">Hình ảnh:</label>
+	                <input type="file" id="image" name="image">
+
+	                <!-- input để lưu fileName hiện tại -->
+	                <input type="hidden" id="currentImageURL" name="currentImageURL">
+
+	                <!-- hiển thị ảnh cũ -->
 	                <div id="imagePreview" style="margin-top: 5px; font-size: 0.9em; color: #555;"></div>
 	            </div>
-	            
+
 	            <div class="form-group">
 	                <label for="home">Trang nhất:</label>
 	                <input type="checkbox" id="home" name="home" value="true">
-	                <small> (Chọn nếu muốn tin xuất hiện trên trang chủ)</small>
 	            </div>
-	            
+
 	            <div class="form-actions">
-	                <%-- Ban đầu là "Thêm", JS sẽ đổi thành "Cập nhật" khi Sửa --%>
 	                <button type="submit" class="btn-save">Lưu</button>
 	                <button type="button" class="btn-new" onclick="resetForm()">Mới</button>
 	            </div>
+
 	        </form>
 	    </div>
-	    
+
 	    <div class="crud-table">
 	        <h3>Danh Sách Bản Tin</h3>
 	        <table>
@@ -113,16 +108,23 @@
 	                    <th>Hành động</th>
 	                </tr>
 	            </thead>
+
 	            <tbody>
 	                <c:choose>
 	                    <c:when test="${not empty newsList}">
 	                        <c:forEach var="item" items="${newsList}">
-	                            <%-- THÊM data-* attributes cho JS --%>
-	                            <tr data-id="${item.id}" data-title="${item.title}" data-content="${item.content}" 
-	                                data-image="${item.image}" data-author="${item.author}" data-categoryid="${item.categoryId}" 
+	                            <tr 
+	                                data-id="${item.id}"
+	                                data-title="${item.title}"
+	                                data-content="${item.content}"
+	                                data-image="${item.image}"
+	                                data-author="${item.author}"
+	                                data-categoryid="${item.categoryId}"
 	                                data-home="${item.home}">
+	                                
 	                                <td>${item.id}</td>
 	                                <td>${item.title}</td>
+
 	                                <td>
 	                                    <c:choose>
 	                                        <c:when test="${item.categoryId == 1}">Thời sự</c:when>
@@ -130,14 +132,15 @@
 	                                        <c:when test="${item.categoryId == 3}">Pháp luật</c:when>
 	                                        <c:when test="${item.categoryId == 4}">Thể thao</c:when>
 	                                        <c:when test="${item.categoryId == 5}">Giáo dục</c:when>
-	                                        <c:otherwise>Khác (${item.categoryId})</c:otherwise>
+	                                        <c:otherwise>Khác</c:otherwise>
 	                                    </c:choose>
 	                                </td>
-	                                <td>
-	                                    <fmt:formatDate value="${item.postedDate}" pattern="dd/MM/yyyy"/>
-	                                </td>
+
+	                                <td><fmt:formatDate value="${item.postedDate}" pattern="dd/MM/yyyy"/></td>
+
 	                                <td>${item.author}</td>
 	                                <td>${item.viewCount}</td>
+
 	                                <td>
 	                                    <c:if test="${item.home}">
 	                                        <i class="fa-solid fa-check" style="color: green;"></i>
@@ -146,85 +149,67 @@
 	                                        <i class="fa-solid fa-xmark" style="color: red;"></i>
 	                                    </c:if>
 	                                </td>
+
 	                                <td>
-	                                    <%-- Nút Sửa gọi hàm JS --%>
 	                                    <a href="#" class="btn-edit" onclick="loadNewsForEdit(${item.id})">Sửa</a> |
-	                                    
-	                                    <%-- Nút Xóa trỏ về Controller với action=delete --%>
-	                                    <a href="${pageContext.request.contextPath}/tin-tuc?action=delete&id=${item.id}" class="btn-delete" 
-                                            onclick="return confirm('Bạn có chắc chắn muốn xóa bản tin ID: ${item.id} không?')">Xóa</a>
+	                                    <a href="${pageContext.request.contextPath}/tin-tuc?action=delete&id=${item.id}"
+	                                        onclick="return confirm('Xóa bản tin ID: ${item.id}?')" 
+	                                        class="btn-delete">Xóa</a>
 	                                </td>
 	                            </tr>
 	                        </c:forEach>
 	                    </c:when>
+
 	                    <c:otherwise>
-	                        <tr>
-	                            <td colspan="8" class="no-data">
-	                                Chưa có bản tin nào được thêm vào.
-	                            </td>
-	                        </tr>
+	                        <tr><td colspan="8" class="no-data">Chưa có bản tin nào.</td></tr>
 	                    </c:otherwise>
 	                </c:choose>
 	            </tbody>
 	        </table>
 	    </div>
-	
 	</div>
-	
+
 	<script>
-	    // Hàm điền dữ liệu vào form khi bấm nút Sửa
 	    function loadNewsForEdit(id) {
-	        // Sử dụng data attribute để lấy dữ liệu
 	        var row = document.querySelector('tr[data-id="' + id + '"]');
 	        var imagePreviewDiv = document.getElementById('imagePreview');
-	        
+
 	        if (row) {
 	            document.getElementById('id').value = id;
 	            document.getElementById('title').value = row.dataset.title;
 	            document.getElementById('content').value = row.dataset.content;
 	            document.getElementById('author').value = row.dataset.author;
 	            document.getElementById('categoryid').value = row.dataset.categoryid;
-	            
-	            // LẤY URL ẢNH HIỆN TẠI VÀ THIẾT LẬP CHO TRƯỜNG ẨN
+
 	            var currentImage = row.dataset.image;
 	            document.getElementById('currentImageURL').value = currentImage;
-	            
-	            // HIỂN THỊ URL ảnh cũ (Chỉ xem, không thể điền vào input file)
+
 	            if (currentImage) {
-	                imagePreviewDiv.innerHTML = 'Ảnh/Video hiện tại: <a href="' + currentImage + '" target="_blank">' + currentImage + '</a>' + 
-	                                            '<br>Chọn tệp mới để thay thế.';
+	                imagePreviewDiv.innerHTML =
+	                    "Ảnh hiện tại:<br>" +
+	                    "<img src='${pageContext.request.contextPath}/upload_img/news/" + currentImage + "' style='max-width:150px; margin-top:5px; border:1px solid #ccc;'>";
 	            } else {
-	                imagePreviewDiv.innerHTML = 'Chưa có Ảnh/Video hiện tại. Vui lòng chọn tệp.';
+	                imagePreviewDiv.innerHTML = "Chưa có ảnh.";
 	            }
-	            
-	            // Xử lý checkbox 'home'
-	            var homeCheckbox = document.getElementById('home');
-	            homeCheckbox.checked = (row.dataset.home === 'true');
-	            
-	            // ĐẶT LẠI INPUT FILE VỀ TRẠNG THÁI RỖNG
-	            document.getElementById('image').value = '';
-	            
-	            // ĐỔI TEXT NÚT THÀNH CẬP NHẬT/LƯU
+
+	            document.getElementById('image').value = "";
+	            document.getElementById('home').checked = (row.dataset.home === 'true');
 	            document.querySelector('.btn-save').textContent = 'Cập nhật';
-	            
-	            // Cuộn lên đầu trang
+
 	            window.scrollTo(0, 0);
 	        }
 	    }
-	    
-	    // Hàm reset form
+
 	    function resetForm() {
 	        document.getElementById('newsForm').reset();
-	        document.getElementById('id').value = ''; // Đảm bảo ID trống để kích hoạt Add
-	        document.getElementById('currentImageURL').value = ''; // Xóa URL ảnh cũ
-	        document.getElementById('imagePreview').innerHTML = ''; // Xóa preview
-	        document.querySelector('.btn-save').textContent = 'Lưu'; // Đổi lại thành Lưu
+	        document.getElementById('id').value = "";
+	        document.getElementById('currentImageURL').value = "";
+	        document.getElementById('imagePreview').innerHTML = "";
+	        document.querySelector('.btn-save').textContent = 'Lưu';
 	    }
-	    
-	    // Gọi resetForm() khi trang được tải lần đầu để đảm bảo nút có text "Lưu" nếu form rỗng
-	    window.onload = function() {
-	        resetForm();
-	    };
+
+	    window.onload = resetForm;
 	</script>
+
 </body>
 </html>
