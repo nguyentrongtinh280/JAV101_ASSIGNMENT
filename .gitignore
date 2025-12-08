@@ -1,2 +1,6 @@
-/build/
-/target/
+# Output files
+target/
+test-output/
+
+# Embedded Git repository (if not meant to be a submodule)
+JAV101_ASSIGNMENT/

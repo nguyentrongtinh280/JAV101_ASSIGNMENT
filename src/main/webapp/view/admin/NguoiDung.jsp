@@ -75,7 +75,7 @@
 			            <label for="mobile">Điện thoại:</label>
 			            <input type="tel" id="mobile" name="mobile" value="${editUser != null ? editUser.mobile : param.mobile}">
 			        </div>
-<div class="form-field-half">
+				<div class="form-field-half">
 			            <label for="birthday">Ngày sinh:</label>
 			            <input type="date" id="birthday" name="birthday" value="${editUser != null ? editUser.birthday : param.birthday}">
 			        </div>
