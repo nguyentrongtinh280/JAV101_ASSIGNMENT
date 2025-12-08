@@ -10,6 +10,22 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 
     <style>
+    /* CSS CHUNG CHO HEADER (Giống trang index) */
+        .header {
+            display: flex; 
+            justify-content: space-between;
+            align-items: center; 
+            padding: 15px 30px; 
+            background-color: #ffffff; 
+            border-bottom: 1px solid #eeeeee; 
+            height: 80px; 
+        }
+        
+        /* Điều chỉnh kích thước Logo */
+        .header-image {
+            height: 60px; 
+            width: auto; 
+        }
         .content-container {
             display: grid;
             grid-template-columns: 3fr 1fr;

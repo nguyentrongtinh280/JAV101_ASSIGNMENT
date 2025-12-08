@@ -6,6 +6,25 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+	/* CSS CHUNG CHO HEADER (Giống trang index) */
+        .header {
+            display: flex; 
+            justify-content: space-between;
+            align-items: center; 
+            padding: 15px 30px; 
+            background-color: #ffffff; 
+            border-bottom: 1px solid #eeeeee; 
+            height: 80px; 
+        }
+        
+        /* Điều chỉnh kích thước Logo */
+        .header-image {
+            height: 60px; 
+            width: auto; 
+        }
+        
+</style>
     <meta charset="UTF-8">
     <title>Tin Mới Nhất</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
