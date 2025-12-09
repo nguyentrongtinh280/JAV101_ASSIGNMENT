@@ -2,32 +2,32 @@
 <testng-results ignored="0" total="4" passed="0" failed="4" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-12-08T14:06:01 ICT" name="Default suite" finished-at="2025-12-08T14:07:45 ICT" duration-ms="103295">
+  <suite started-at="2025-12-09T14:29:15 ICT" name="Default suite" finished-at="2025-12-09T14:30:53 ICT" duration-ms="97767">
     <groups>
     </groups>
-    <test started-at="2025-12-08T14:06:01 ICT" name="Default test" finished-at="2025-12-08T14:07:45 ICT" duration-ms="103295">
+    <test started-at="2025-12-09T14:29:15 ICT" name="Default test" finished-at="2025-12-09T14:30:53 ICT" duration-ms="97767">
       <class name="test.TestLogin1">
-        <test-method is-config="true" signature="setup()[pri:0, instance:test.TestLogin1@2f4948e4]" started-at="2025-12-08T14:06:01 ICT" name="setup" finished-at="2025-12-08T14:06:04 ICT" duration-ms="2582" status="PASS">
+        <test-method is-config="true" signature="setup()[pri:0, instance:test.TestLogin1@2f4948e4]" started-at="2025-12-09T14:29:15 ICT" name="setup" finished-at="2025-12-09T14:29:19 ICT" duration-ms="3310" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="testSuccessfulRegistration()[pri:1, instance:test.TestLogin1@2f4948e4]" started-at="2025-12-08T14:06:04 ICT" name="testSuccessfulRegistration" description="Kiểm tra Đăng ký thành công" finished-at="2025-12-08T14:06:40 ICT" duration-ms="36198" status="FAIL">
+        <test-method signature="testSuccessfulRegistration()[pri:1, instance:test.TestLogin1@2f4948e4]" started-at="2025-12-09T14:29:19 ICT" name="testSuccessfulRegistration" description="Kiểm tra Đăng ký thành công" finished-at="2025-12-09T14:30:13 ICT" duration-ms="54582" status="FAIL">
           <exception class="org.openqa.selenium.TimeoutException">
             <message>
               <![CDATA[Expected condition failed: waiting for url to be "http://localhost:8080/Assignment/Login.jsp". Current url: "http://localhost:8080/Assignment/register" (tried for 10 second(s) with 500 milliseconds interval)
 Build info: version: '4.38.0', revision: '6b412e825c*'
 System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.8'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 142.0.7444.176, chrome: {chromedriverVersion: 142.0.7444.175 (302067f14a4..., userDataDir: C:\Users\ADMIN\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:54498}, goog:processID: 22848, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:54498/devtoo..., se:cdpVersion: 142.0.7444.176, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: 182ddc9aae1aa2d8c361a7f45c9c4cd4]]>
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 142.0.7444.176, chrome: {chromedriverVersion: 142.0.7444.175 (302067f14a4..., userDataDir: C:\Users\ADMIN\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:56120}, goog:processID: 12612, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:56120/devtoo..., se:cdpVersion: 142.0.7444.176, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: b2ca3ad12b0d6152e0cec76095065602]]>
             </message>
             <full-stacktrace>
               <![CDATA[org.openqa.selenium.TimeoutException: Expected condition failed: waiting for url to be "http://localhost:8080/Assignment/Login.jsp". Current url: "http://localhost:8080/Assignment/register" (tried for 10 second(s) with 500 milliseconds interval)
 Build info: version: '4.38.0', revision: '6b412e825c*'
 System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.8'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 142.0.7444.176, chrome: {chromedriverVersion: 142.0.7444.175 (302067f14a4..., userDataDir: C:\Users\ADMIN\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:54498}, goog:processID: 22848, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:54498/devtoo..., se:cdpVersion: 142.0.7444.176, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: 182ddc9aae1aa2d8c361a7f45c9c4cd4
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 142.0.7444.176, chrome: {chromedriverVersion: 142.0.7444.175 (302067f14a4..., userDataDir: C:\Users\ADMIN\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:56120}, goog:processID: 12612, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:56120/devtoo..., se:cdpVersion: 142.0.7444.176, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: b2ca3ad12b0d6152e0cec76095065602
 at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
 at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:228)
 at test.TestLogin1.testSuccessfulRegistration(TestLogin1.java:103)
@@ -63,7 +63,7 @@ at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testSuccessfulRegistration -->
-        <test-method signature="testFailedRegistration_MismatchedPasswords()[pri:2, instance:test.TestLogin1@2f4948e4]" started-at="2025-12-08T14:06:40 ICT" name="testFailedRegistration_MismatchedPasswords" description="Kiểm tra Đăng ký thất bại (Mật khẩu không khớp)" finished-at="2025-12-08T14:07:04 ICT" duration-ms="23488" status="FAIL">
+        <test-method signature="testFailedRegistration_MismatchedPasswords()[pri:2, instance:test.TestLogin1@2f4948e4]" started-at="2025-12-09T14:30:13 ICT" name="testFailedRegistration_MismatchedPasswords" description="Kiểm tra Đăng ký thất bại (Mật khẩu không khớp)" finished-at="2025-12-09T14:30:26 ICT" duration-ms="12548" status="FAIL">
           <exception class="java.lang.AssertionError">
             <message>
               <![CDATA[expected [http://localhost:8080/Assignment/Register.jsp] but found [http://localhost:8080/Assignment/register]]]>
@@ -109,23 +109,23 @@ at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testFailedRegistration_MismatchedPasswords -->
-        <test-method signature="testSuccessfulLogin()[pri:3, instance:test.TestLogin1@2f4948e4]" started-at="2025-12-08T14:07:04 ICT" name="testSuccessfulLogin" description="Kiểm tra Đăng nhập thành công" finished-at="2025-12-08T14:07:29 ICT" duration-ms="25497" status="FAIL">
+        <test-method signature="testSuccessfulLogin()[pri:3, instance:test.TestLogin1@2f4948e4]" started-at="2025-12-09T14:30:26 ICT" name="testSuccessfulLogin" description="Kiểm tra Đăng nhập thành công" finished-at="2025-12-09T14:30:44 ICT" duration-ms="18672" status="FAIL">
           <exception class="org.openqa.selenium.TimeoutException">
             <message>
               <![CDATA[Expected condition failed: waiting for url to be "http://localhost:8080/Assignment/index.jsp". Current url: "http://localhost:8080/Assignment/login" (tried for 10 second(s) with 500 milliseconds interval)
 Build info: version: '4.38.0', revision: '6b412e825c*'
 System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.8'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 142.0.7444.176, chrome: {chromedriverVersion: 142.0.7444.175 (302067f14a4..., userDataDir: C:\Users\ADMIN\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:54498}, goog:processID: 22848, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:54498/devtoo..., se:cdpVersion: 142.0.7444.176, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: 182ddc9aae1aa2d8c361a7f45c9c4cd4]]>
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 142.0.7444.176, chrome: {chromedriverVersion: 142.0.7444.175 (302067f14a4..., userDataDir: C:\Users\ADMIN\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:56120}, goog:processID: 12612, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:56120/devtoo..., se:cdpVersion: 142.0.7444.176, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: b2ca3ad12b0d6152e0cec76095065602]]>
             </message>
             <full-stacktrace>
               <![CDATA[org.openqa.selenium.TimeoutException: Expected condition failed: waiting for url to be "http://localhost:8080/Assignment/index.jsp". Current url: "http://localhost:8080/Assignment/login" (tried for 10 second(s) with 500 milliseconds interval)
 Build info: version: '4.38.0', revision: '6b412e825c*'
 System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.8'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 142.0.7444.176, chrome: {chromedriverVersion: 142.0.7444.175 (302067f14a4..., userDataDir: C:\Users\ADMIN\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:54498}, goog:processID: 22848, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:54498/devtoo..., se:cdpVersion: 142.0.7444.176, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: 182ddc9aae1aa2d8c361a7f45c9c4cd4
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 142.0.7444.176, chrome: {chromedriverVersion: 142.0.7444.175 (302067f14a4..., userDataDir: C:\Users\ADMIN\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:56120}, goog:processID: 12612, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:56120/devtoo..., se:cdpVersion: 142.0.7444.176, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: b2ca3ad12b0d6152e0cec76095065602
 at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
 at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:228)
 at test.TestLogin1.testSuccessfulLogin(TestLogin1.java:131)
@@ -161,7 +161,7 @@ at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testSuccessfulLogin -->
-        <test-method signature="testFailedLogin()[pri:4, instance:test.TestLogin1@2f4948e4]" started-at="2025-12-08T14:07:29 ICT" name="testFailedLogin" description="Kiểm tra Đăng nhập thất bại (Mật khẩu sai)" finished-at="2025-12-08T14:07:44 ICT" duration-ms="14904" status="FAIL">
+        <test-method signature="testFailedLogin()[pri:4, instance:test.TestLogin1@2f4948e4]" started-at="2025-12-09T14:30:44 ICT" name="testFailedLogin" description="Kiểm tra Đăng nhập thất bại (Mật khẩu sai)" finished-at="2025-12-09T14:30:52 ICT" duration-ms="7971" status="FAIL">
           <exception class="java.lang.AssertionError">
             <message>
               <![CDATA[expected [http://localhost:8080/Assignment/Login.jsp] but found [http://localhost:8080/Assignment/login]]]>
@@ -207,7 +207,7 @@ at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testFailedLogin -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:test.TestLogin1@2f4948e4]" started-at="2025-12-08T14:07:44 ICT" name="tearDown" finished-at="2025-12-08T14:07:45 ICT" duration-ms="522" status="PASS">
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:test.TestLogin1@2f4948e4]" started-at="2025-12-09T14:30:52 ICT" name="tearDown" finished-at="2025-12-09T14:30:53 ICT" duration-ms="541" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
