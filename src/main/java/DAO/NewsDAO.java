@@ -215,6 +215,27 @@ public class NewsDAO {
 	    }
 	    return list;
 	}
+	
+	public List<News> getTopViewedNews(int limit) {
+	    List<News> list = new ArrayList<>();
+	    String sql = "SELECT * FROM news ORDER BY ViewCount DESC LIMIT ?";
+	    
+	    try (Connection conn = DBConnection.getConnection();
+	         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+	        ps.setInt(1, limit);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            while (rs.next()) {
+	                list.add(mapResultSetToNews(rs));
+	            }
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+
 	public void UpdateViewCount(int newsId) {
 	    String sql = "UPDATE news SET ViewCount = ViewCount + 1 WHERE Id = ?"; 
 	    
