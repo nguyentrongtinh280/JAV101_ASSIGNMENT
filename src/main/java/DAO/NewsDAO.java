@@ -13,7 +13,6 @@ import java.sql.Date;
 
 public class NewsDAO {
 
-    // Phương thức ánh xạ ResultSet thành đối tượng News (Giữ nguyên)
     private News mapResultSetToNews(ResultSet rs) throws SQLException {
         News news = new News();
         news.setId(rs.getInt("Id"));
@@ -32,7 +31,7 @@ public class NewsDAO {
   
     public List<News> getAllNews() {
         List<News> list = new ArrayList<>();
-        String query = "SELECT * FROM News ORDER BY PostedDate DESC"; 
+        String query = "SELECT * FROM News ORDER BY PostedDate DESC, Id DESC";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {
