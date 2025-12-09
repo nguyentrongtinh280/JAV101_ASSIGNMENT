@@ -23,8 +23,8 @@ public class TestLogin1 {
     private final String HOME_PAGE_URL = BASE_URL + "index.jsp";
     private final String REGISTER_PAGE_URL = BASE_URL + "Register.jsp";
 
-    private final String VALID_EMAIL = "quocanhbuinhat@gmail.com";
-    private final String VALID_PASSWORD = "123456";
+    private final String VALID_EMAIL = "anhbnqtv00062@fpt.edu.vn";
+    private final String VALID_PASSWORD = "123";
     private final String INVALID_PASSWORD = "wrongpassword123";
 
     private String uniqueEmail = "test" + System.currentTimeMillis() + "@assignment.com";
@@ -44,7 +44,7 @@ public class TestLogin1 {
      * ---------------------------------------------------- */
     private void sleep() {
         try {
-            Thread.sleep(2000); // chỉnh tại đây nếu muốn nhanh/chậm hơn
+            Thread.sleep(1000); // chỉnh tại đây nếu muốn nhanh/chậm hơn
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }

@@ -37,7 +37,7 @@
 		    color: inherit;
 		    display: block;
 		    height: 100%; 
-		}
+		}	
         /* CSS CHUNG */
         body {
             font-family: 'Montserrat', sans-serif;
