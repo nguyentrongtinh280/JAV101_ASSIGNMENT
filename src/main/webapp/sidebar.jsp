@@ -1,61 +1,84 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<%-- 
-    Sử dụng lớp 'sidebar-content' đã được định nghĩa trong index.jsp 
-    để áp dụng các style bố cục và hộp (box-shadow/padding).
---%>
+<%@ page import="java.util.List" %>
+<%@ page import="DAO.NewsDAO" %>
+<%@ page import="Entity.News" %>
+
 <aside class="sidebar-content">
 
     <%-- =========================================== --%>
-    <%-- 1. 5 BẢN TIN ĐƯỢC XEM NHIỀU (Giữ nguyên) --%>
+    <%-- 1. 5 BẢN TIN ĐƯỢC XEM NHIỀU --%>
     <%-- =========================================== --%>
-    <div class="widget hot-news most-viewed-box">
-        <h3>5 BẢN TIN ĐƯỢC XEM NHIỀU</h3>
-        
-        <ol class="most-viewed-list">
-            <li><span class="rank-number">1</span><a href="detail.jsp?id=hot1">Tin Hot Về Vấn Đề Pháp Luật</a></li>
-            <li><span class="rank-number">2</span><a href="detail.jsp?id=hot2">Tin Hot Về Vấn Đề Giáo Dục </a></li>
-            <li><span class="rank-number">3</span><a href="detail.jsp?id=hot3">Tin Hot Về Vấn Đề Thể Thao</a></li>
-            <li><span class="rank-number">4</span><a href="detail.jsp?id=hot4">Tin Hot Về Vấn Đề Thời Sự</a></li>
-            <li><span class="rank-number">5</span><a href="detail.jsp?id=hot5">Tin Hot Về Vấn Đề Văn Hóa</a></li>
-        </ol>
-    </div>
-    
-    <%-- =========================================== --%>
-    <%-- 2. 6 BẢN TIN MỚI NHẤT (Đã chuyển sang dùng style đánh số) --%>
+	<div class="widget hot-news most-viewed-box">
+		<h3>5 BẢN TIN ĐƯỢC XEM NHIỀU</h3>
+		<ol class="most-viewed-list">
+			<%
+			NewsDAO newsDAO = new NewsDAO();
+			List<News> hotNewsList = newsDAO.getTopViewedNews(5);
+			int rank = 1;
+			for (News news : hotNewsList) {
+			%>
+			<li><span class="rank-number"><%=rank%></span> <a
+				href="chi-tiet-tin?id=<%=news.getId()%>"><%=news.getTitle()%></a></li>
+			<%
+			rank++;
+			}
+			%>
+		</ol>
+	</div>
+
+	<%-- =========================================== --%>
+    <%-- 2. 5 BẢN TIN MỚI NHẤT --%>
     <%-- =========================================== --%>
     <div class="widget new-news">
-        <h3>6 BẢN TIN MỚI NHẤT</h3>
-        <%-- Đổi thành OL và áp dụng class .most-viewed-list để dùng CSS tương tự --%>
-        <ol class="most-viewed-list"> 
-            <li><span class="rank-number">1</span><a href="detail.jsp?id=new1">Tin Mới Nhất Về Môi Trường</a></li>
-            <li><span class="rank-number">2</span><a href="detail.jsp?id=new2">Tin Mới Về Giáo Dục</a></li>
-            <li><span class="rank-number">3</span><a href="detail.jsp?id=new3">Tin Mới Về Pháp Luật</a></li>
-            <li><span class="rank-number">4</span><a href="detail.jsp?id=new4">Tin Mới Về Thể Thao</a></li>
-            <li><span class="rank-number">5</span><a href="detail.jsp?id=new5">Tin Mới Về Thời Sự</a></li>
-            <li><span class="rank-number">6</span><a href="detail.jsp?id=new6">Tin Mới Về Văn Hóa</a></li>
-            
+        <h3>5 BẢN TIN MỚI NHẤT</h3>
+        <ol class="most-viewed-list">
+            <%
+                List<News> latestNews = newsDAO.getLatestNews(5);
+                rank = 1;
+                for (News news : latestNews) {
+            %>
+            <li>
+                <span class="rank-number"><%=rank%></span>
+                <a href="chi-tiet-tin?id=<%=news.getId()%>"><%=news.getTitle()%></a>
+            </li>
+            <%
+                    rank++;
+                }
+            %>
         </ol>
     </div>
 
     <%-- =========================================== --%>
-    <%-- 3. 5 BẢN TIN ĐÃ XEM (Đã chuyển sang dùng style đánh số) --%>
+    <%-- 3. 5 BẢN TIN ĐÃ XEM --%>
     <%-- =========================================== --%>
     <div class="widget viewed-news">
         <h3>5 BẢN TIN BẠN ĐÃ XEM</h3>
-        <%-- Đổi thành OL và áp dụng class .most-viewed-list để dùng CSS tương tự --%>
-        <ol class="most-viewed-list"> 
-            <li><span class="rank-number">1</span><a href="detail.jsp?id=view1">Tin đã xem: Chủ đề Công nghệ</a></li>
-            <li><span class="rank-number">2</span><a href="detail.jsp?id=view2">Tin đã xem: Chủ đề Kinh tế</a></li>
-            <li><span class="rank-number">3</span><a href="detail.jsp?id=view3">Tin đã xem: Chủ đề Xã hội</a></li>
-            <li><span class="rank-number">4</span><a href="detail.jsp?id=view4">Tin đã xem: Chủ đề Du lịch</a></li>
-            <li><span class="rank-number">5</span><a href="detail.jsp?id=view5">Tin đã xem: Chủ đề Sức khỏe</a></li>
+        <ol class="most-viewed-list">
+            <%
+                List<Integer> viewedIds = (List<Integer>) session.getAttribute("viewed");
+                if (viewedIds != null) {
+                    rank = 1;
+                    for (int id : viewedIds) {
+                        if (rank > 5) break; // chỉ 5 tin
+                        News news = newsDAO.getNewsById(id);
+                        if (news != null) {
+            %>
+            <li>
+                <span class="rank-number"><%=rank%></span>
+                <a href="chi-tiet-tin?id=<%=news.getId()%>"><%=news.getTitle()%></a>
+            </li>
+            <%
+                            rank++;
+                        }
+                    }
+                }
+            %>
         </ol>
     </div>
 
     <%-- =========================================== --%>
-    <%-- 4. ĐĂNG KÝ NEWSLETTER (Giữ nguyên) --%>
+    <%-- 4. ĐĂNG KÝ NEWSLETTER --%>
     <%-- =========================================== --%>
     <div class="widget newsletter">
         <h3>Đăng Ký Newsletter</h3>
@@ -65,4 +88,5 @@
             <button type="submit" class="btn btn-danger btn-sm w-100 mt-2">Đăng ký</button>
         </form>
     </div>
+
 </aside>

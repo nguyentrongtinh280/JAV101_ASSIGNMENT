@@ -13,7 +13,6 @@ import java.sql.Date;
 
 public class NewsDAO {
 
-    // Phương thức ánh xạ ResultSet thành đối tượng News (Giữ nguyên)
     private News mapResultSetToNews(ResultSet rs) throws SQLException {
         News news = new News();
         news.setId(rs.getInt("Id"));
@@ -29,15 +28,10 @@ public class NewsDAO {
         news.setHome(rs.getBoolean("Home"));
         return news;
     }
-    /**
-     * Lấy tất cả tin tức
-     */
+  
     public List<News> getAllNews() {
         List<News> list = new ArrayList<>();
-        // Truy vấn SQL lấy TẤT CẢ bản ghi, sắp xếp theo PostedDate để tin mới nhất lên đầu
-        String query = "SELECT * FROM News ORDER BY PostedDate DESC"; 
-        
-        // Thực hiện kết nối DB và ánh xạ (mapping) kết quả từ ResultSet sang đối tượng News
+        String query = "SELECT * FROM News ORDER BY PostedDate DESC, Id DESC";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {
@@ -61,13 +55,9 @@ public class NewsDAO {
             
         } catch (Exception e) {
             e.printStackTrace();
-            // Xử lý lỗi
         }
         return list;
     }
-    /**
-     * Lấy tin tức theo ID
-     */
     public News getNewsById(int newsId) { 
         String sql = "SELECT * FROM news WHERE Id = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -85,9 +75,6 @@ public class NewsDAO {
         return null;
     }
 
-    /**
-     * Thêm tin tức mới
-     */
     public boolean addNews(News news) {
         String sql = "INSERT INTO news (Title, Content, Image, PostedDate, Author, ViewCount, CategoryId, Home) "
                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -110,10 +97,7 @@ public class NewsDAO {
             return false;
         }
     }
-    
-    /**
-     * Cập nhật tin tức
-     */
+
     public boolean updateNews(News news) {
         String sql = "UPDATE news SET Title=?, Content=?, Image=?, PostedDate=?, Author=?, ViewCount=?, CategoryId=?, Home=? WHERE Id=?";
         try (Connection conn = DBConnection.getConnection();
@@ -137,9 +121,7 @@ public class NewsDAO {
         }
     }
     
-    /**
-     * Xóa tin tức theo ID
-     */
+ 
     public boolean deleteNews(int newsId) {
         String sql = "DELETE FROM news WHERE Id = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -155,12 +137,8 @@ public class NewsDAO {
         }
     }
 
-	/**
-     * Lấy danh sách các tin tức được đánh dấu hiển thị trên trang chủ (Home = 1).
-     */
 	public List<News> getFeaturedNews() {
 		List<News> list = new ArrayList<>();
-		// Truy vấn: Lấy tất cả tin tức có Home = 1 và sắp xếp theo ngày đăng mới nhất
 	    String sql = "SELECT * FROM news WHERE Home = 1 ORDER BY PostedDate DESC"; 
 	    
 	    try (Connection conn = DBConnection.getConnection();
@@ -177,18 +155,14 @@ public class NewsDAO {
 
 	}
 
-	/**
-     * Lấy danh sách N tin tức mới nhất (N = limit).
-     */
-	public List<News> getLatestNews(int limit) { // Đã sửa tên tham số
+
+	public List<News> getLatestNews(int limit) {
 		List<News> list = new ArrayList<>();
-	    // Truy vấn: Lấy tất cả tin tức, sắp xếp theo ngày đăng mới nhất, và giới hạn số lượng
-	    String sql = "SELECT * FROM news ORDER BY PostedDate DESC LIMIT ?"; // Sử dụng LIMIT cho MySQL
-	    
+	    String sql = "SELECT * FROM news ORDER BY PostedDate DESC LIMIT ?"; 
 	    try (Connection conn = DBConnection.getConnection();
 	         PreparedStatement ps = conn.prepareStatement(sql)) {
 
-			ps.setInt(1, limit); // SỬA: Dùng đúng giá trị LIMIT truyền vào
+			ps.setInt(1, limit); 
 	        
 	        try (ResultSet rs = ps.executeQuery()) {
 	            while (rs.next()) {
@@ -201,7 +175,6 @@ public class NewsDAO {
 	    return list;
 	}
 	
-	// Lấy danh sách tin theo CategoryId
 	public List<News> getNewsByCategory(int categoryId) {
 	    List<News> list = new ArrayList<>();
 	    String sql = "SELECT * FROM News WHERE CategoryId = ? ORDER BY PostedDate DESC";
@@ -233,7 +206,27 @@ public class NewsDAO {
 	         ResultSet rs = ps.executeQuery()) {
 
 	        while (rs.next()) {
-	            list.add(mapResultSetToNews(rs));  // Dùng lại hàm map chung
+	            list.add(mapResultSetToNews(rs)); 
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+	
+	public List<News> getTopViewedNews(int limit) {
+	    List<News> list = new ArrayList<>();
+	    String sql = "SELECT * FROM news ORDER BY ViewCount DESC LIMIT ?";
+	    
+	    try (Connection conn = DBConnection.getConnection();
+	         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+	        ps.setInt(1, limit);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            while (rs.next()) {
+	                list.add(mapResultSetToNews(rs));
+	            }
 	        }
 
 	    } catch (Exception e) {
@@ -256,6 +249,19 @@ public class NewsDAO {
 	}
 
 
+	public void UpdateViewCount(int newsId) {
+	    String sql = "UPDATE news SET ViewCount = ViewCount + 1 WHERE Id = ?"; 
+	    
+	    try (Connection conn = DBConnection.getConnection();
+	         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+	        ps.setInt(1, newsId);
+	        ps.executeUpdate();
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 
 
 }
