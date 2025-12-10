@@ -20,9 +20,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
-
+import DAO.NewsDAO.Category; // Lớp Category đã được import
 import DAO.NewsDAO;
 import Entity.News;
+
+// BỔ SUNG IMPORTS CHO TÍNH NĂNG EMAIL
+import DAO.NewsletterDAO;
+import Util.EmailUtil;
+// END BỔ SUNG IMPORTS
 
 @WebServlet("/tin-tuc")
 @MultipartConfig(
@@ -33,6 +38,10 @@ import Entity.News;
 public class TinTucController extends HttpServlet {
 
     private NewsDAO newsDAO = new NewsDAO();
+    // BỔ SUNG KHAI BÁO DAO CHO NEWSLETTER
+    private NewsletterDAO newsletterDAO = new NewsletterDAO(); 
+    // END BỔ SUNG DAO
+    
     private static final Logger LOGGER = Logger.getLogger(TinTucController.class.getName());
 
     // Thư mục nằm trong webapp/upload_img/news
@@ -119,14 +128,50 @@ public class TinTucController extends HttpServlet {
             resp.sendRedirect(contextPath + "/tin-tuc");
             return;
         }
+        
+        // =================================================================
+        // PHẦN ĐÃ SỬA: Lấy dữ liệu Category và truyền sang JSP
+        // =================================================================
+        try {
+            List<Category> categoryList = newsDAO.getAllCategories();
+            req.setAttribute("categoryList", categoryList);
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Lỗi khi lấy danh sách Category", e);
+            // Có thể set một danh sách rỗng nếu bị lỗi
+            req.setAttribute("categoryList", List.of()); 
+        }
+        // =================================================================
 
-        // Flash message
         req.setAttribute("message", session.getAttribute("message"));
         session.removeAttribute("message");
         req.setAttribute("error", session.getAttribute("error"));
         session.removeAttribute("error");
+        
+        String searchKeyword = req.getParameter("searchKeyword");
+        String categoryIdParam = req.getParameter("categoryId");
 
-        List<News> newsList = newsDAO.getAllNews();
+        int categoryId = 0; // Giá trị mặc định 0 cho 'Tất cả loại tin'
+        try {
+            if (categoryIdParam != null && !categoryIdParam.isEmpty()) {
+                categoryId = Integer.parseInt(categoryIdParam);
+            }
+        } catch (NumberFormatException e) {
+            LOGGER.log(Level.WARNING, "CategoryId không hợp lệ: " + categoryIdParam, e);
+            categoryId = 0;
+        }
+        
+        List<News> newsList;
+        if ((searchKeyword != null && !searchKeyword.trim().isEmpty()) || categoryId > 0) {
+            String trimmedKeyword = (searchKeyword != null) ? searchKeyword.trim() : ""; 
+            
+            newsList = newsDAO.searchNews(trimmedKeyword, categoryId);
+            req.setAttribute("searchKeyword", trimmedKeyword); 
+            req.setAttribute("selectedCategoryId", categoryId); 
+        } else {
+            newsList = newsDAO.getAllNews();
+            req.setAttribute("selectedCategoryId", 0);
+        }
+        
         req.setAttribute("newsList", newsList);
 
         req.getRequestDispatcher("/view/admin/TinTuc.jsp").forward(req, resp);
@@ -202,7 +247,32 @@ public class TinTucController extends HttpServlet {
             actionType = "Thêm mới";
             news.setPostedDate(new Date());
             news.setViewCount(0);
+            
+            // THỰC HIỆN THÊM TIN
             success = newsDAO.addNews(news);
+            
+            // =================================================================
+            // BỔ SUNG LOGIC GỬI EMAIL SAU KHI THÊM THÀNH CÔNG
+            // =================================================================
+            if (success) {
+                try {
+                    // Lấy danh sách email
+                    List<String> subscribers = newsletterDAO.getAllActiveSubscribers();
+                    
+                    // Xây dựng link tạm thời cho bài viết mới
+                    // Link này cần được cập nhật để trỏ đến trang chi tiết thực tế của tin tức
+                    String newsLink = req.getRequestURL().toString().replace("/tin-tuc", req.getContextPath() + "/trang-chu"); 
+                    
+                    for (String email : subscribers) {
+                        EmailUtil.sendNewNewsNotification(email, news.getTitle(), newsLink);
+                    }
+                    LOGGER.log(Level.INFO, "Đã gửi thông báo cho {0} người đăng ký.", subscribers.size());
+                    
+                } catch (Exception e) {
+                    LOGGER.log(Level.SEVERE, "LỖI GỬI EMAIL SAU KHI THÊM TIN MỚI:", e);
+                }
+            }
+            // =================================================================
         }
         // Cập nhật
         else {

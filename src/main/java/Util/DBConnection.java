@@ -10,6 +10,7 @@ public class DBConnection {
     private static String user = "root";      // thay bằng user MySQL của bạn
     private static String password = "tinh1511"; // thay bằng mật khẩu MySQL
 
+
     public static Connection getConnection() throws Exception {
         Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection(url, user, password);
