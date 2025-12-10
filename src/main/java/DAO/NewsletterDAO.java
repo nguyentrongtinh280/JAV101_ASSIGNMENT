@@ -1,5 +1,7 @@
 package DAO;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +10,25 @@ import Entity.Newsletter;
 import Util.DBConnection;
 
 public class NewsletterDAO {
+	// Giả sử bảng newsletter có cột 'Email' và 'Status' (1 là Hoạt động)
+    public List<String> getAllActiveSubscribers() {
+        List<String> emails = new ArrayList<>();
+        // Lấy tất cả email có trạng thái "Hoạt động" (giả sử Status = 1)
+        String query = "SELECT Email FROM newsletters WHERE Enabled = 1"; 
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                emails.add(rs.getString("Email"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return emails;
+    }
 
     public void insert(Newsletter n) {
         String sql = "INSERT INTO newsletters(Email, Enabled) VALUES (?, ?)";

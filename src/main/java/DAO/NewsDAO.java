@@ -249,5 +249,87 @@ public class NewsDAO {
 	    }
 	}
 
+	// Tìm kiếm thông tin tức
+	public static class Category {
+	    private int id;
+	    private String name;
 
+	    public Category() {}
+	    public Category(int id, String name) {
+	        this.id = id;
+	        this.name = name;
+	    }
+
+	    public int getId() { return id; }
+	    public void setId(int id) { this.id = id; }
+	    public String getName() { return name; }
+	    public void setName(String name) { this.name = name; }
+	}
+
+	public List<Category> getAllCategories() {
+	    List<Category> list = new ArrayList<>();
+	    // Đảm bảo tên bảng là 'categories' hoặc tên bảng Loại tin của bạn
+	    String query = "SELECT Id, Name FROM categories"; 
+	    
+	    try (Connection conn = Util.DBConnection.getConnection(); // Sử dụng DBConnection
+	         PreparedStatement ps = conn.prepareStatement(query);
+	         ResultSet rs = ps.executeQuery()) {
+	        
+	        while (rs.next()) {
+	            Category cat = new Category();
+	            cat.setId(rs.getInt("Id"));
+	            cat.setName(rs.getString("Name"));
+	            list.add(cat);
+	        }
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+	// Đặt phương thức này vào trong class NewsDAO
+	public List<News> searchNews(String keyword, int categoryId) {
+	    List<News> list = new ArrayList<>();
+	    
+	    // Khởi tạo phần cơ sở của câu truy vấn
+	    String query = "SELECT * FROM News WHERE 1=1"; 
+
+	    List<String> parameters = new ArrayList<>();
+
+	    if (categoryId > 0) {
+	        query += " AND CategoryId = ?";
+	    }
+	    
+	    if (keyword != null && !keyword.trim().isEmpty()) {
+	        query += " AND (Title LIKE ? OR Content LIKE ?)";
+	    }
+	    // Sắp xếp theo ngày đăng mới nhất
+	    query += " ORDER BY PostedDate DESC, Id DESC";
+
+	    try (Connection conn = DBConnection.getConnection();
+	         PreparedStatement ps = conn.prepareStatement(query)) {
+
+	        int paramIndex = 1;
+
+	        if (categoryId > 0) {
+	            ps.setInt(paramIndex++, categoryId);
+	        }
+
+	        if (keyword != null && !keyword.trim().isEmpty()) {
+	            String searchPattern = "%" + keyword.trim() + "%";
+	            ps.setString(paramIndex++, searchPattern); 
+	            ps.setString(paramIndex++, searchPattern); 
+	        }
+	        
+	        try (ResultSet rs = ps.executeQuery()) {
+	            while (rs.next()) {
+	                list.add(mapResultSetToNews(rs));
+	            }
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
 }

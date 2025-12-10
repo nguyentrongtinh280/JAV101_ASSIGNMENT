@@ -55,6 +55,8 @@
         .main-content {
             padding-right: 20px;
             border-right: 1px solid #eee; 
+            grid-template-columns: 3fr 1fr;
+            
         }
         .news-item {
             margin-bottom: 35px; 
@@ -108,7 +110,9 @@
                 padding-right: 0;
             }
         }
-    </style>
+    </style>   
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+
 </head>
 <body>
     
@@ -120,8 +124,7 @@
             </div>
         </c:if>
     </div>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-
+ 
     <header class="header">
     	<img src="${pageContext.request.contextPath}/img/lgo.png" alt="Logo ABC News" class="header-image">
         
@@ -155,8 +158,6 @@
                     <c:forEach var="item" items="${featuredNews}">
                         
                         <article class="news-item">
-
-                            <!-- 🔥 ĐÃ SỬA: ĐƯỜNG DẪN ẢNH ĐÚNG -->
                             <img src="${pageContext.request.contextPath}/upload_img/news/${item.image}" 
                                  class="news-image" alt="${item.title}">
                             
@@ -198,18 +199,66 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('newsletter-form');
+    const emailInput = document.getElementById('newsletter-email');
+    const messageDiv = document.getElementById('newsletter-message');
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const alertElement = document.getElementById('autoDismissAlert');
-            if (alertElement) {
+    if (form) {
+        form.addEventListener('submit', function(event) {
+            // Ngăn chặn hành động gửi form mặc định (ngăn chuyển hướng)
+            event.preventDefault(); 
+            
+            const email = emailInput.value;
+            const url = form.action;
+
+            // Ẩn thông báo cũ và hiển thị thông báo đang xử lý
+            messageDiv.style.display = 'block';
+            messageDiv.className = 'mt-2 text-info';
+            messageDiv.innerHTML = 'Đang xử lý đăng ký...';
+
+            // Gửi dữ liệu bằng fetch (AJAX)
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                // Tạo chuỗi dữ liệu gửi đi (email=gia_tri_email)
+                body: new URLSearchParams({
+                    'email': email
+                })
+            })
+            .then(response => {
+                // Kiểm tra xem phản hồi có thành công không (status 200-299)
+                if (response.ok) {
+                    return response.text(); // Lấy phản hồi dạng text
+                }
+                // Nếu có lỗi server (4xx, 5xx), ném lỗi
+                throw new Error('Lỗi server: ' + response.status);
+            })
+            .then(responseText => {
+                // Xử lý thành công
+                messageDiv.className = 'mt-2 text-success';
+                messageDiv.innerHTML = 'Đăng ký nhận tin thành công!';
+                emailInput.value = ''; // Xóa email đã nhập
+            })
+            .catch(error => {
+                // Xử lý lỗi (ví dụ: email đã tồn tại, lỗi kết nối)
+                console.error('Đăng ký thất bại:', error);
+                messageDiv.className = 'mt-2 text-danger';
+                messageDiv.innerHTML = 'Đăng ký thất bại. Email có thể đã tồn tại.';
+            })
+            .finally(() => {
+                // Tự động ẩn thông báo sau 4 giây
                 setTimeout(() => {
-                    const alert = bootstrap.Alert.getOrCreateInstance(alertElement);
-                    alert.close();
-                }, 2000); 
-            }
+                    messageDiv.style.display = 'none';
+                }, 4000);
+            });
         });
-    </script>
+    }
+});
+</script>
 
     <c:remove var="flashMessage" scope="session"/>
     <c:remove var="flashError" scope="session"/>	

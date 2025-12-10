@@ -32,9 +32,6 @@ public class ChiTietTinController extends HttpServlet {
 
         int id = Integer.parseInt(idRaw);
 
-        // =======================================================
-        // BƯỚC 1: TĂNG VIEWCOUNT TRONG DATABASE
-        // =======================================================
         newsDAO.UpdateViewCount(id); 
 
         // BƯỚC 2: Lấy thông tin bài viết (Lúc này đã bao gồm viewCount MỚI)

@@ -38,7 +38,7 @@
 	        /* Khối nội dung chính */
 	        .main-content {
 	            background: #ffffff;
-	            padding: 25px 30px;
+	            padding: 100px 50px;
 	            border-radius: 10px;
 	            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 	            border: 1px solid #e8e8e8;
@@ -108,9 +108,8 @@
 	    .view-count-info {
 	        display: inline-flex;
 	        align-items: center;
-	        margin-left: auto; /* Đẩy View Count sang phải */
+	        margin-left: auto; 
 	        font-weight: 600;
-	        /* Đổi màu chữ sang màu xanh đậm hơn (ví dụ: #0056b3) */
 	        color: #0056b3; 
 	    }
 	
