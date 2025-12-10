@@ -241,6 +241,20 @@ public class NewsDAO {
 	    }
 	    return list;
 	}
+	
+	public void increaseViewCount(int id) {
+	    String sql = "UPDATE News SET ViewCount = ViewCount + 1 WHERE Id = ?";
+	    try (Connection conn = DBConnection.getConnection();
+	         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+	        ps.setInt(1, id);
+	        ps.executeUpdate();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+
 
 
 

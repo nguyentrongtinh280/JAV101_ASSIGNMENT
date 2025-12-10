@@ -28,7 +28,10 @@ public class ChiTietTinController extends HttpServlet {
 
         int id = Integer.parseInt(idRaw);
 
-        // Lấy thông tin bài viết
+        // 1. Tăng lượt xem
+        newsDAO.increaseViewCount(id);
+
+        // 2. Lấy lại bài viết sau khi tăng view
         News news = newsDAO.getNewsById(id);
 
         if (news == null) {
@@ -37,10 +40,11 @@ public class ChiTietTinController extends HttpServlet {
             return;
         }
 
-        // Gửi dữ liệu sang JSP
+        // 3. Gửi dữ liệu sang JSP
         req.setAttribute("newsItem", news);
 
         req.getRequestDispatcher("/view/news/ChiTietTin.jsp")
                 .forward(req, resp);
     }
 }
+
