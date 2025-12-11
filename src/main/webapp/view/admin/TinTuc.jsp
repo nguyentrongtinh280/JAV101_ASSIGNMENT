@@ -3,6 +3,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="lang.Language" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -83,171 +85,178 @@
     <jsp:include page="MenuAdmin.jsp" /> 
 
 	<div class="crud-container">
-	    
 	    <div class="crud-header">
-	        <h1><i class="fa fa-newspaper-o"></i> Quản Lý Tin Tức</h1>
+	        <h1><i class="fa fa-newspaper-o"></i> <fmt:message key="news.title"/></h1>
+	
 	        <div class="search-box">
 	            <form action="${pageContext.request.contextPath}/tin-tuc" method="get" class="search-form">
 	                
-	                <input type="text" name="searchKeyword" placeholder="Tìm kiếm theo tiêu đề/nội dung..." 
+	                <input type="text" name="searchKeyword"
+	                       placeholder="<fmt:message key='search.placeholder'/>"
 	                       value="${searchKeyword != null ? searchKeyword : ''}"
 	                       class="search-input">
-	                       
+	
 	                <select name="categoryId" class="search-select">
-	                    <option value="0" ${selectedCategoryId == 0 ? 'selected' : ''}>-- Tất cả loại tin --</option>
+	                    <option value="0" ${selectedCategoryId == 0 ? 'selected' : ''}>
+	                        <fmt:message key="category.all"/>
+	                    </option>
+	
 	                    <c:forEach var="cat" items="${categoryList}">
 	                        <option value="${cat.id}" ${selectedCategoryId == cat.id ? 'selected' : ''}>
 	                            ${cat.name}
 	                        </option>
 	                    </c:forEach>
 	                </select>
-	                
-	                <button type="submit" class="btn-search"><i class="fa-solid fa-magnifying-glass"></i> Tìm</button>
-	                
+	
+	                <button type="submit" class="btn-search">
+	                    <i class="fa-solid fa-magnifying-glass"></i> <fmt:message key="search"/>
+	                </button>
+	
 	                <c:if test="${not empty searchKeyword || selectedCategoryId > 0}">
-	                    <a href="${pageContext.request.contextPath}/tin-tuc" class="btn-clear-search">Xóa tìm kiếm</a>
+	                    <a href="${pageContext.request.contextPath}/tin-tuc" class="btn-clear-search">
+	                        <fmt:message key="clear.search"/>
+	                    </a>
 	                </c:if>
+	
 	            </form>
 	        </div>
 	    </div>
-        
-        <hr class="red-divider">
-
-	    <c:if test="${not empty message}">
-	        <div class="alert success" style="font-weight: bold;">${message}</div>
-	    </c:if>
-
-	    <c:if test="${not empty error}">
-	        <div class="alert error" style="font-weight: bold;">${error}</div>
-	    </c:if>
-
+	
+	    <hr class="red-divider">
+	
 	    <div class="crud-form">
-	        <h3>Thông Tin Bản Tin</h3>
-
-	        <form action="${pageContext.request.contextPath}/tin-tuc" 
-	              method="post" id="newsForm" enctype="multipart/form-data">
-
+	        <h3><fmt:message key="form.info"/></h3>
+	
+	        <form action="${pageContext.request.contextPath}/tin-tuc" method="post"
+	              enctype="multipart/form-data" id="newsForm">
+	
 	            <div class="form-group">
-	                <label for="id">Mã bản tin:</label>
+	                <label><fmt:message key="form.id"/></label>
 	                <input type="text" id="id" name="id" readonly>
 	            </div>
-
+	
 	            <div class="form-group">
-	                <label for="title">Tiêu đề:</label>
+	                <label><fmt:message key="form.title"/></label>
 	                <input type="text" id="title" name="title" required>
 	            </div>
-
+	
 	            <div class="form-group">
-	                <label for="categoryid">Loại tin:</label>
+	                <label><fmt:message key="form.category"/></label>
 	                <select id="categoryid" name="categoryid" required>
-	                    <option value="">-- Chọn Loại tin --</option>
+	                    <option value="">-- Chọn --</option>
 	                    <c:forEach var="cat" items="${categoryList}">
-	                        <option value="${cat.id}">${cat.name}</option> 
+	                        <option value="${cat.id}">${cat.name}</option>
 	                    </c:forEach>
 	                </select>
 	            </div>
-
+	
 	            <div class="form-group">
-	                <label for="content">Nội dung:</label>
+	                <label><fmt:message key="form.content"/></label>
 	                <textarea id="content" name="content" rows="6" required></textarea>
 	            </div>
-
+	
 	            <div class="form-group">
-	                <label for="author">Tên Tác Giả:</label>
+	                <label><fmt:message key="form.author"/></label>
 	                <input type="text" id="author" name="author" required>
 	            </div>
-
+	
 	            <div class="form-group">
-	                <label for="image">Hình ảnh:</label>
+	                <label><fmt:message key="form.image"/></label>
 	                <input type="file" id="image" name="image">
-
 	                <input type="hidden" id="currentImageURL" name="currentImageURL">
-
-	                <div id="imagePreview" style="margin-top: 5px; font-size: 0.9em; color: #555;"></div>
+	                <div id="imagePreview"></div>
 	            </div>
-
+	
 	            <div class="form-group">
-	                <label for="home">Trang nhất:</label>
+	                <label><fmt:message key="form.home"/></label>
 	                <input type="checkbox" id="home" name="home" value="true">
 	            </div>
-
+	
 	            <div class="form-actions">
-	                <button type="submit" class="btn-save">Lưu</button>
-	                <button type="button" class="btn-new" onclick="resetForm()">Mới</button>
+	                <button type="submit" class="btn-save"><fmt:message key="btn.save"/></button>
+	                <button type="button" class="btn-new" onclick="resetForm()"><fmt:message key="btn.new"/></button>
 	            </div>
-
+	
 	        </form>
 	    </div>
-
+	
 	    <div class="crud-table">
-	        <h3>Danh Sách Bản Tin</h3>
+	        <h3><fmt:message key="table.list"/></h3>
+	
 	        <table>
 	            <thead>
 	                <tr>
-	                    <th>Id</th>
-	                    <th>Tiêu đề</th>
-	                    <th>Loại tin</th>
-	                    <th>Ngày đăng</th>
-	                    <th>Tác giả</th>
-	                    <th>Lượt xem</th>
-	                    <th>Trang nhất</th>
-	                    <th>Hành động</th>
+	                    <th><fmt:message key="table.id"/></th>
+	                    <th><fmt:message key="table.title"/></th>
+	                    <th><fmt:message key="table.category"/></th>
+	                    <th><fmt:message key="table.date"/></th>
+	                    <th><fmt:message key="table.author"/></th>
+	                    <th><fmt:message key="table.view"/></th>
+	                    <th><fmt:message key="table.home"/></th>
+	                    <th><fmt:message key="table.action"/></th>
 	                </tr>
 	            </thead>
-
+	
 	            <tbody>
 	                <c:choose>
 	                    <c:when test="${not empty newsList}">
 	                        <c:forEach var="item" items="${newsList}">
-	                            <tr 
-	                                data-id="${item.id}"
+	                            <tr data-id="${item.id}"
 	                                data-title="${item.title}"
 	                                data-content="${item.content}"
-	                                data-image="${item.image}"
-	                                data-author="${item.author}"
 	                                data-categoryid="${item.categoryId}"
-	                                data-home="${item.home}">
-	                                
+	                                data-image="${item.image}"
+	                                data-home="${item.home}"
+	                                data-author="${item.author}">
+	
 	                                <td>${item.id}</td>
 	                                <td>${item.title}</td>
-
+	
 	                                <td>
-	                                    <c:set var="categoryName" value="Khác"/>
-                                        <c:forEach var="cat" items="${categoryList}">
-                                            <c:if test="${item.categoryId == cat.id}">
-                                                <c:set var="categoryName" value="${cat.name}"/>
-                                            </c:if>
-                                        </c:forEach>
-                                        ${categoryName}
+	                                    <c:forEach var="cat" items="${categoryList}">
+	                                        <c:if test="${cat.id == item.categoryId}">
+	                                            ${cat.name}
+	                                        </c:if>
+	                                    </c:forEach>
 	                                </td>
-
+	
 	                                <td><fmt:formatDate value="${item.postedDate}" pattern="dd/MM/yyyy"/></td>
-
 	                                <td>${item.author}</td>
 	                                <td>${item.viewCount}</td>
-
+	
 	                                <td>
 	                                    <c:if test="${item.home}">
-	                                        <i class="fa-solid fa-check" style="color: green;"></i>
+	                                        ✔
 	                                    </c:if>
 	                                    <c:if test="${not item.home}">
-	                                        <i class="fa-solid fa-xmark" style="color: red;"></i>
+	                                        ✘
 	                                    </c:if>
 	                                </td>
-
+	
 	                                <td>
-	                                    <a href="#" class="btn-edit" onclick="loadNewsForEdit(${item.id})">Sửa</a> |
+	                                    <a href="#" class="btn-edit" onclick="loadNewsForEdit(${item.id})">
+	                                        <fmt:message key="action.edit"/>
+	                                    </a> |
+	
 	                                    <a href="${pageContext.request.contextPath}/tin-tuc?action=delete&id=${item.id}"
-	                                        onclick="return confirm('Xóa bản tin ID: ${item.id}?')" 
-	                                        class="btn-delete">Xóa</a>
+	                                       onclick="return confirm('<fmt:message key="confirm.delete"/> ${item.id}?')"
+	                                       class="btn-delete">
+	                                       <fmt:message key="action.delete"/>
+	                                    </a>
 	                                </td>
+	
 	                            </tr>
 	                        </c:forEach>
 	                    </c:when>
-
+	
 	                    <c:otherwise>
-	                        <tr><td colspan="8" class="no-data">Chưa có bản tin nào.</td></tr>
+	                        <tr>
+	                            <td colspan="8" class="no-data">
+	                                <fmt:message key="table.no.data"/>
+	                            </td>
+	                        </tr>
 	                    </c:otherwise>
+	
 	                </c:choose>
 	            </tbody>
 	        </table>

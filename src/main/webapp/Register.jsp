@@ -1,11 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="lang.Language" />
+
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="${sessionScope.lang}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Đăng ký Tài khoản - Góc Nhìn Báo Chí</title>
+    <title><fmt:message key="register.title"/></title>
     
     <%-- 1. Thêm Bootstrap CSS --%>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
@@ -176,79 +181,86 @@
 </head>
 <body>
     
-    <%-- Main Content (Phần chứa Form Glassmorphism) --%>
     <div class="main-content">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-auto">
-                    <div class="register-card"> 
-                        
-                        <%-- LOGO --%>
-                        <img id="login-logo" src="img/lgo.png" alt="Logo" onerror="this.onerror=null;this.src='https://placehold.co/80x80/2a3a5e/ffffff?text=LOGO'">
-                        
-                        <%-- TIÊU ĐỀ HỢP NHẤT --%>
-                        <h2 class="mb-4">Đăng ký Tài khoản</h2>
-                        
-                        <%-- 🔥 HIỂN THỊ LỖI ĐĂNG KÝ (Mật khẩu không khớp/Email đã tồn tại) --%>
+                    <div class="register-card">
+
+                        <img id="login-logo" src="img/lgo.png" alt="Logo">
+
+                        <h2 class="mb-4"><fmt:message key="register.header"/></h2>
+
                         <c:if test="${not empty requestScope.error}">
                             <div class="alert alert-error mb-4" role="alert">
                                 ${requestScope.error}
                             </div>
                         </c:if>
-                        
-                        <form action="${pageContext.request.contextPath}/register" method="POST"> 
-                            
-                            <%-- Trường Họ và Tên --%>
+
+                        <form action="${pageContext.request.contextPath}/register" method="POST">
+
+                            <!-- Fullname -->
                             <div class="mb-3">
-                                <label for="fullname" class="form-label">Họ và Tên:</label>
+                                <label class="form-label"><fmt:message key="register.fullname"/>:</label>
                                 <div class="input-group-custom">
                                     <i class="fas fa-user input-icon"></i>
-                                    <input type="text" id="fullname" name="fullname" class="form-control" required placeholder="Nhập Họ và Tên">
+                                    <input type="text" name="fullname" class="form-control"
+                                           placeholder="<fmt:message key='register.fullname.placeholder'/>" required>
                                 </div>
                             </div>
 
-                            <%-- Trường Email --%>
+                            <!-- Email -->
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email:</label>
+                                <label class="form-label"><fmt:message key="register.email"/>:</label>
                                 <div class="input-group-custom">
                                     <i class="fas fa-envelope input-icon"></i>
-                                    <input type="email" id="email" name="email" class="form-control" required placeholder="Nhập địa chỉ Email">
+                                    <input type="email" name="email" class="form-control"
+                                           placeholder="<fmt:message key='register.email.placeholder'/>" required>
                                 </div>
                             </div>
-                            
-                            <%-- Trường Mật khẩu --%>
+
+                            <!-- Password -->
                             <div class="mb-3">
-                                <label for="password" class="form-label">Mật khẩu:</label>
+                                <label class="form-label"><fmt:message key="register.password"/>:</label>
                                 <div class="input-group-custom">
                                     <i class="fas fa-lock input-icon"></i>
-                                    <input type="password" id="password" name="password" class="form-control" required placeholder="Mật khẩu tối thiểu 6 ký tự">
+                                    <input type="password" name="password" class="form-control"
+                                           placeholder="<fmt:message key='register.password.placeholder'/>" required>
                                 </div>
                             </div>
-                            
-                            <%-- Trường Xác nhận Mật khẩu --%>
+
+                            <!-- Confirm Password -->
                             <div class="mb-4">
-                                <label for="confirmPassword" class="form-label">Xác nhận Mật khẩu:</label>
+                                <label class="form-label"><fmt:message key="register.confirm"/>:</label>
                                 <div class="input-group-custom">
                                     <i class="fas fa-key input-icon"></i>
-                                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required placeholder="Xác nhận lại mật khẩu">
+                                    <input type="password" name="confirmPassword" class="form-control"
+                                           placeholder="<fmt:message key='register.confirm.placeholder'/>" required>
                                 </div>
                             </div>
-                                           
-                            <button type="submit" class="btn btn-brand-secondary w-100">ĐĂNG KÝ</button>
-                            
+
+                            <button type="submit" class="btn btn-brand-secondary w-100">
+                                <fmt:message key="register.submit"/>
+                            </button>
+
                             <div class="text-center mt-4 alt-link-text">
-                                <p class="mb-0">Đã có tài khoản? <a href="${pageContext.request.contextPath}/login">Đăng nhập ngay</a></p>            
+                                <p class="mb-0">
+                                    <fmt:message key="register.haveaccount"/> 
+                                    <a href="${pageContext.request.contextPath}/login">
+                                        <fmt:message key="register.login"/>
+                                    </a>
+                                </p>
                             </div>
-                            
+
                         </form>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
     
-<%-- Loại bỏ script alert() cũ không cần thiết --%>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
 </body> 
 </html>
