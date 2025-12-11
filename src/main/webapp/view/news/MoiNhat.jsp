@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <style>
 	/* CSS CHUNG CHO HEADER (Giống trang index) */
         .header {
@@ -23,11 +24,74 @@
             height: 60px; 
             width: auto; 
         }
-        
+        /* Cấu trúc bố cục chung */
+       .content-container {
+	            display: grid;
+	            grid-template-columns: 3fr 1fr;
+	            gap: 35px; /* Giữ nguyên khoảng cách giữa nội dung chính và sidebar */
+	            max-width: 1200px;
+	            margin: 25px auto;
+	            padding: 0 20px;
+	        }
+	
+	        /* Khối nội dung chính */
+	        .main-content {
+	            background: #ffffff;
+	            padding: 20px 20px; /* Giảm padding cho nội dung chính */
+	            border-radius: 10px;
+	            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+	            border: 1px solid #e8e8e8;
+                padding-right: 35px; /* Thêm padding bên phải để sidebar có khoảng thở */
+	        }
+
+	/* CSS DÀNH CHO DANH SÁCH TIN (Giống Index) */
+    .news-item {
+        display: flex; /* Đảm bảo hình ảnh và nội dung nằm ngang */
+        margin-bottom: 30px; 
+        padding-bottom: 25px;
+        border-bottom: 1px dashed #ddd; /* Đường phân cách */
+        overflow: hidden; 
+    }
+    .news-item:last-child {
+        border-bottom: none;
+    }
+    
+    .news-item .news-image-list {
+        width: 200px; /* Kích thước ảnh cố định */
+        height: 120px; 
+        object-fit: cover;
+        margin-right: 20px; /* Khoảng cách giữa ảnh và nội dung */
+        border-radius: 5px;
+        flex-shrink: 0; 
+    }
+    
+    .news-item .news-info h3 {
+        font-size: 1.25rem; 
+        margin-bottom: 8px;
+        margin-top: 0;
+    }
+    .news-item .excerpt {
+        color: #555;
+        font-size: 0.95rem;
+        line-height: 1.4;
+        margin-bottom: 8px;
+    }
+    .news-item .meta {
+        font-size: 0.85rem;
+        color: #888;
+        display: block; /* Đảm bảo ngày đăng và tác giả nằm trên cùng một dòng nếu có chỗ */
+    }
+	.news-item {
+        display: flex; /* Đảm bảo hình ảnh và nội dung nằm ngang */
+        margin-bottom: 30px; /* <--- LỆNH TẠO KHOẢNG CÁCH GIỮA CÁC HÀNG */
+        padding-bottom: 25px;
+        border-bottom: 1px dashed #ddd; /* Đường phân cách */
+        overflow: hidden; 
+    }
 </style>
     <meta charset="UTF-8">
     <title>Tin Mới Nhất</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    
 </head>
 
 <body>
@@ -56,7 +120,8 @@
             <c:when test="${not empty listMoiNhat}">
                 <c:forEach var="item" items="${listMoiNhat}">
 
-                    <article class="news-list-item">
+                    <%-- ĐÃ ĐỔI CLASS TỪ news-list-item THÀNH news-item --%>
+                    <article class="news-item">
 
                         <img src="${pageContext.request.contextPath}/upload_img/news/${item.image}"
                              alt="${item.title}"
