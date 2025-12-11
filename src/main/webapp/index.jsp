@@ -3,15 +3,18 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %> 
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %> 
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %> 
+
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="lang.Language"/>
 <!DOCTYPE html>
-<html>
+<html lang="${sessionScope.lang}"><html>
 <head>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
-    <title>Trang Chủ - Góc Nhìn Báo Chí </title>
+    <title><fmt:message key="home.title"/></title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     
     <style>
@@ -115,150 +118,152 @@
 
 </head>
 <body>
-    
-    <div class="alert-container container"> 
-        <c:if test="${not empty sessionScope.flashMessage}">
-            <div id="autoDismissAlert" class="alert alert-success alert-dismissible fade show" role="alert">
-                ${sessionScope.flashMessage}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </c:if>
-    </div>
- 
-    <header class="header">
-    	<img src="${pageContext.request.contextPath}/img/lgo.png" alt="Logo ABC News" class="header-image">
-        
-        <div class="header-login">
-            <c:choose>
-                <c:when test="${not empty sessionScope.loggedInUser}"> 
-                    Xin chào, 
-                        <strong>${sessionScope.loggedInUser.fullname}</strong>
-                    <a href="${pageContext.request.contextPath}/logout" class="btn btn-sm btn-danger ms-2">Đăng xuất</a>
-                </c:when>
-                <c:when test="${not empty sessionScope.currentUser}"> 
-                    Xin chào  
-                        <strong>${sessionScope.currentUser.fullname}</strong>
-                    <a href="${pageContext.request.contextPath}/logout" class="btn btn-sm btn-danger ms-2">Đăng xuất</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="${pageContext.request.contextPath}/login" class="btn btn-sm btn-primary">Đăng nhập</a>
-                </c:otherwise>
-            </c:choose>
-        </div>
-    </header>
-
-    <jsp:include page="menu.jsp" />
-    
-    <main class="content-container">
-        <section class="main-content">
-            <h2>Tin Nổi Bật Trên Trang Nhất</h2>
-
-            <c:choose>
-                <c:when test="${not empty featuredNews}">
-                    <c:forEach var="item" items="${featuredNews}">
-                        
-                        <article class="news-item">
-                            <img src="${pageContext.request.contextPath}/upload_img/news/${item.image}" 
-                                 class="news-image" alt="${item.title}">
-                            
-                            <div class="news-info">
-                                <h3>
-                                    <a href="${pageContext.request.contextPath}/chi-tiet-tin?id=${item.id}">
-									    ${item.title}
-									</a>
-
-                                </h3>
-                                
-                                <p class="excerpt">
-                                    ${item.content.length() > 200 ? item.content.substring(0, 200).concat("...") : item.content}
-                                </p>
-                                
-                                <p class="meta">
-                                    <span>Ngày đăng: 
-                                        <fmt:formatDate value="${item.postedDate}" pattern="dd/MM/yyyy"/>
-                                    </span>
-                                    <span>Tác giả: ${item.author}</span>
-                                </p>
-                            </div>
-                        </article>
-                        
-                    </c:forEach>
-                </c:when>
-                <c:otherwise>
-                    <p>Hiện không có tin tức nổi bật nào được đánh dấu để hiển thị trên trang nhất.</p>
-                </c:otherwise>
-            </c:choose>
-            
-        </section>
-
-        <jsp:include page="sidebar.jsp"/>
-    </main>
-
-    <footer class="footer">
-        <p>Góc Nhìn Báo Chí</p>
-    </footer>
+	
+	<div class="alert-container container"> 
+	    <c:if test="${not empty sessionScope.flashMessage}">
+	        <div id="autoDismissAlert" class="alert alert-success alert-dismissible fade show" role="alert">
+	            ${sessionScope.flashMessage}
+	            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+	        </div>
+	    </c:if>
+	</div>
+	
+	<header class="header">
+	    <img src="${pageContext.request.contextPath}/img/lgo.png" alt="Logo" class="header-image">
+	
+	    <div class="header-login">
+	        <c:choose>
+	            <c:when test="${not empty sessionScope.loggedInUser}">
+	                <fmt:message key="home.hello"/> 
+	                <strong>${sessionScope.loggedInUser.fullname}</strong>
+	                <a href="${pageContext.request.contextPath}/logout" class="btn btn-sm btn-danger ms-2">
+	                    <fmt:message key="home.logout"/>
+	                </a>
+	            </c:when>
+	            <c:otherwise>
+	                <a href="${pageContext.request.contextPath}/login" class="btn btn-sm btn-primary">
+	                    <fmt:message key="home.login"/>
+	                </a>
+	            </c:otherwise>
+	        </c:choose>
+	    </div>
+	</header>
+	
+	<jsp:include page="menu.jsp" />
+	
+	<main class="content-container">
+	    <section class="main-content">
+	        <h2><fmt:message key="home.featured"/></h2>
+	
+	        <c:choose>
+	            <c:when test="${not empty featuredNews}">
+	                <c:forEach var="item" items="${featuredNews}">
+	                    <article class="news-item">
+	
+	                        <img src="${pageContext.request.contextPath}/upload_img/news/${item.image}" 
+	                             class="news-image">
+	
+	                        <div class="news-info">
+	                            <h3>
+	                                <a href="${pageContext.request.contextPath}/chi-tiet-tin?id=${item.id}">
+	                                    ${item.title}
+	                                </a>
+	                            </h3>
+	
+	                            <p class="excerpt">
+	                                ${item.content.length() > 200 ? item.content.substring(0,200).concat("...") : item.content}
+	                            </p>
+	
+	                            <p class="meta">
+	                                <span><fmt:message key="home.date"/>:
+	                                    <fmt:formatDate value="${item.postedDate}" pattern="dd/MM/yyyy"/>
+	                                </span>
+	
+	                                <span><fmt:message key="home.author"/>:
+	                                    ${item.author}
+	                                </span>
+	                            </p>
+	                        </div>
+	                    </article>
+	                </c:forEach>
+	            </c:when>
+	
+	            <c:otherwise>
+	                <p><fmt:message key="home.empty"/></p>
+	            </c:otherwise>
+	        </c:choose>
+	
+	    </section>
+	
+	    <jsp:include page="sidebar.jsp"/>
+	</main>
+	
+	<footer class="footer">
+	    <p><fmt:message key="footer.text"/></p>
+	</footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('newsletter-form');
-    const emailInput = document.getElementById('newsletter-email');
-    const messageDiv = document.getElementById('newsletter-message');
-
-    if (form) {
-        form.addEventListener('submit', function(event) {
-            // Ngăn chặn hành động gửi form mặc định (ngăn chuyển hướng)
-            event.preventDefault(); 
-            
-            const email = emailInput.value;
-            const url = form.action;
-
-            // Ẩn thông báo cũ và hiển thị thông báo đang xử lý
-            messageDiv.style.display = 'block';
-            messageDiv.className = 'mt-2 text-info';
-            messageDiv.innerHTML = 'Đang xử lý đăng ký...';
-
-            // Gửi dữ liệu bằng fetch (AJAX)
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                // Tạo chuỗi dữ liệu gửi đi (email=gia_tri_email)
-                body: new URLSearchParams({
-                    'email': email
-                })
-            })
-            .then(response => {
-                // Kiểm tra xem phản hồi có thành công không (status 200-299)
-                if (response.ok) {
-                    return response.text(); // Lấy phản hồi dạng text
-                }
-                // Nếu có lỗi server (4xx, 5xx), ném lỗi
-                throw new Error('Lỗi server: ' + response.status);
-            })
-            .then(responseText => {
-                // Xử lý thành công
-                messageDiv.className = 'mt-2 text-success';
-                messageDiv.innerHTML = 'Đăng ký nhận tin thành công!';
-                emailInput.value = ''; // Xóa email đã nhập
-            })
-            .catch(error => {
-                // Xử lý lỗi (ví dụ: email đã tồn tại, lỗi kết nối)
-                console.error('Đăng ký thất bại:', error);
-                messageDiv.className = 'mt-2 text-danger';
-                messageDiv.innerHTML = 'Đăng ký thất bại. Email có thể đã tồn tại.';
-            })
-            .finally(() => {
-                // Tự động ẩn thông báo sau 4 giây
-                setTimeout(() => {
-                    messageDiv.style.display = 'none';
-                }, 4000);
-            });
-        });
-    }
-});
-</script>
+    
+	<script>
+	document.addEventListener('DOMContentLoaded', function() {
+	    const form = document.getElementById('newsletter-form');
+	    const emailInput = document.getElementById('newsletter-email');
+	    const messageDiv = document.getElementById('newsletter-message');
+	
+	    if (form) {
+	        form.addEventListener('submit', function(event) {
+	            // Ngăn chặn hành động gửi form mặc định (ngăn chuyển hướng)
+	            event.preventDefault(); 
+	            
+	            const email = emailInput.value;
+	            const url = form.action;
+	
+	            // Ẩn thông báo cũ và hiển thị thông báo đang xử lý
+	            messageDiv.style.display = 'block';
+	            messageDiv.className = 'mt-2 text-info';
+	            messageDiv.innerHTML = 'Đang xử lý đăng ký...';
+	
+	            // Gửi dữ liệu bằng fetch (AJAX)
+	            fetch(url, {
+	                method: 'POST',
+	                headers: {
+	                    'Content-Type': 'application/x-www-form-urlencoded',
+	                },
+	                // Tạo chuỗi dữ liệu gửi đi (email=gia_tri_email)
+	                body: new URLSearchParams({
+	                    'email': email
+	                })
+	            })
+	            .then(response => {
+	                // Kiểm tra xem phản hồi có thành công không (status 200-299)
+	                if (response.ok) {
+	                    return response.text(); // Lấy phản hồi dạng text
+	                }
+	                // Nếu có lỗi server (4xx, 5xx), ném lỗi
+	                throw new Error('Lỗi server: ' + response.status);
+	            })
+	            .then(responseText => {
+	                // Xử lý thành công
+	                messageDiv.className = 'mt-2 text-success';
+	                messageDiv.innerHTML = 'Đăng ký nhận tin thành công!';
+	                emailInput.value = ''; // Xóa email đã nhập
+	            })
+	            .catch(error => {
+	                // Xử lý lỗi (ví dụ: email đã tồn tại, lỗi kết nối)
+	                console.error('Đăng ký thất bại:', error);
+	                messageDiv.className = 'mt-2 text-danger';
+	                messageDiv.innerHTML = 'Đăng ký thất bại. Email có thể đã tồn tại.';
+	            })
+	            .finally(() => {
+	                // Tự động ẩn thông báo sau 4 giây
+	                setTimeout(() => {
+	                    messageDiv.style.display = 'none';
+	                }, 4000);
+	            });
+	        });
+	    }
+	});
+	</script>
 
     <c:remove var="flashMessage" scope="session"/>
     <c:remove var="flashError" scope="session"/>	

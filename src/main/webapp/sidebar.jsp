@@ -1,14 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<%@page import="java.util.List"%>
-<%@page import="DAO.NewsDAO"%>
-<%@page import="Entity.News"%>
+<%@ page import="java.util.List" %>
+<%@ page import="DAO.NewsDAO" %>
+<%@ page import="Entity.News" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="lang.Language" />
 
 <aside class="sidebar-content">
 
 	<div class="widget hot-news most-viewed-box">
-		<h3>5 BẢN TIN ĐƯỢC XEM NHIỀU</h3>
+		<h3><fmt:message key="sidebar.topViewed" /></h3>
 		<ol class="most-viewed-list">
 			<%
 			NewsDAO newsDAO = new NewsDAO();
@@ -26,7 +30,7 @@
 	</div>
 
     <div class="widget new-news">
-        <h3>5 BẢN TIN MỚI NHẤT</h3>
+        <h3><fmt:message key="sidebar.latestNews" /></h3>
         <ol class="most-viewed-list">
             <%
                 List<News> latestNews = newsDAO.getLatestNews(5);
@@ -45,7 +49,7 @@
     </div>
 
     <div class="widget viewed-news">
-        <h3>5 BẢN TIN BẠN ĐÃ XEM</h3>
+        <h3><fmt:message key="sidebar.viewed" /></h3>
         <ol class="most-viewed-list">
             <%
                 List<Integer> viewedIds = (List<Integer>) session.getAttribute("viewed");
@@ -70,11 +74,19 @@
     </div>
 
    <div class="widget newsletter">
-    <h3>Đăng Ký Newsletter</h3>
-    <p>Nhập email để nhận tin mới nhất từ Góc Nhìn Báo Chí.</p>
+    <h3><fmt:message key="sidebar.newsletterTitle" /></h3>
+    <p><fmt:message key="sidebar.newsletterDesc" /></p>
     <form id="newsletter-form" action="${pageContext.request.contextPath}" method="POST" class="newsletter-form">
-        <input type="email" name="email" placeholder="Email nhận bản tin" required class="form-control" id="newsletter-email">
-        <button type="submit" class="btn btn-danger btn-sm w-100 mt-2">Đăng ký</button>
+        <input 
+		   type="email" 
+		   name="email"
+		   placeholder="<fmt:message key='sidebar.placeholderEmail' />"
+		   required class="form-control" 
+		/>
+
+        <button type="submit" class="btn btn-danger btn-sm w-100 mt-2">
+		    <fmt:message key="sidebar.subscribe" />
+		</button>
         <div id="newsletter-message" class="mt-2" style="display: none;"></div>
     </form>
 </div>

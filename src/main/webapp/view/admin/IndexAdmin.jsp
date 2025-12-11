@@ -1,19 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<%--
-    🔥 BẢO MẬT: Kiểm tra người dùng đã đăng nhập chưa
-    Sử dụng sessionScope.loggedInUser
---%>
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="lang.Language" />
+
 <c:if test="${empty sessionScope.loggedInUser}">
     <c:redirect url="${pageContext.request.contextPath}/login" />
 </c:if>
 
-<%-- Lấy thông tin người dùng đã đăng nhập (đảm bảo user đã tồn tại sau khi kiểm tra) --%>
 <c:set var="loggedInUser" value="${sessionScope.loggedInUser}" />
 
 <!DOCTYPE html>
-<html>
+<html lang="${sessionScope.lang}"><html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -204,9 +203,8 @@
         <header class="header">
             <img src="${pageContext.request.contextPath}/img/lgo.png" alt="Logo" class="header-image">
             
-            <%-- HIỂN THỊ LỜI CHÀO VÀ NÚT ĐĂNG XUẤT --%>
             <div class="header-login">
-                <a href="${pageContext.request.contextPath}/logout" class="btn btn-sm btn-danger ms-2">Đăng xuất</a>
+                <a href="${pageContext.request.contextPath}/logout" class="btn btn-sm btn-danger ms-2"><fmt:message key="admin.logout"/></a>
             </div>
         </header>
         
@@ -214,54 +212,58 @@
 
         <main id="content-wrap">
             <div class="container">
-                
-                <div class="welcome-banner">
-                    <h1>Chào Mừng Admin Trở Lại, ${loggedInUser.fullname}</h1>
-                    <p>Đây là bảng điều khiển quản lý hệ thống tổng quan của bạn.</p>
-                </div>
 
-                <h2><i class="fas fa-chart-line"></i> Tổng Quan Hệ Thống</h2>
-                
-                <div class="dashboard-grid">
-                    
-                    <a href="${pageContext.request.contextPath}/nguoi-dung" class="card-link">
-                        <div class="card users">
-                            <div class="card-header"><i class="fas fa-users"></i> Tổng Người Dùng</div>
-                            <div class="card-value">${totalUsers}</div> 
-                        </div>
-                    </a>
-
-                    <a href="${pageContext.request.contextPath}/loai-tin" class="card-link">
-                        <div class="card categories">
-                            <div class="card-header"><i class="fas fa-list-alt"></i> Tổng Loại Tin (Categories)</div>
-                            <div class="card-value">${totalCategories}</div> 
-                        </div>
-                    </a>
-                    
-                    <a href="${pageContext.request.contextPath}/tin-tuc" class="card-link">
-                        <div class="card news">
-                            <div class="card-header"><i class="fas fa-newspaper"></i> Tin Tức Chờ Duyệt</div>
-                            <div class="card-value">${totalPendingNews}</div> 
-                        </div>
-                    </a>
-                    
-                    <a href="${pageContext.request.contextPath}/newsletter" class="card-link">
-                        <div class="card subscribers">
-                            <div class="card-header"><i class="fas fa-envelope-open-text"></i> Người Đăng Ký Newsletter</div>
-                            <div class="card-value">${totalSubscribers}</div> 
-                        </div>
-                    </a>
-                    
-                </div>
-                
-            </div>
+			    <div class="welcome-banner">
+			        <h1><fmt:message key="admin.welcome"/> ${loggedInUser.fullname}</h1>
+			        <p><fmt:message key="admin.dashboard"/></p>
+			    </div>
+			
+			    <h2><i class="fas fa-chart-line"></i> <fmt:message key="admin.overview"/></h2>
+			
+			    <div class="dashboard-grid">
+			
+			        <a href="${pageContext.request.contextPath}/nguoi-dung" class="card-link">
+			            <div class="card users">
+			                <div class="card-header"><i class="fas fa-users"></i> 
+			                    <fmt:message key="admin.totalUsers"/></div>
+			                <div class="card-value">${totalUsers}</div>
+			            </div>
+			        </a>
+			
+			        <a href="${pageContext.request.contextPath}/loai-tin" class="card-link">
+			            <div class="card categories">
+			                <div class="card-header"><i class="fas fa-list-alt"></i> 
+			                    <fmt:message key="admin.totalCategories"/></div>
+			                <div class="card-value">${totalCategories}</div>
+			            </div>
+			        </a>
+			
+			        <a href="${pageContext.request.contextPath}/tin-tuc" class="card-link">
+			            <div class="card news">
+			                <div class="card-header"><i class="fas fa-newspaper"></i> 
+			                    <fmt:message key="admin.totalPendingNews"/></div>
+			                <div class="card-value">${totalPendingNews}</div>
+			            </div>
+			        </a>
+			
+			        <a href="${pageContext.request.contextPath}/newsletter" class="card-link">
+			            <div class="card subscribers">
+			                <div class="card-header"><i class="fas fa-envelope-open-text"></i> 
+			                    <fmt:message key="admin.totalSubscribers"/></div>
+			                <div class="card-value">${totalSubscribers}</div>
+			            </div>
+			        </a>
+			
+			    </div>
+			
+			</div>
         </main>
         
     </div>
         
     <footer class="footer">
-        <p>Góc Nhìn Báo Chí</p>
-    </footer>
+	    <p><fmt:message key="admin.footer"/></p>
+	</footer>
     
     <%-- BẮT BUỘC: Thêm Bootstrap JS để alert hoạt động --%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
