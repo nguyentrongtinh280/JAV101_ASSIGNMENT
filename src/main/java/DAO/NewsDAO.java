@@ -9,7 +9,7 @@ import java.util.List;
 
 import Entity.News; 
 import Util.DBConnection; 
-import java.sql.Date; 
+import java.sql.Date; 	
 
 public class NewsDAO {
 
@@ -158,7 +158,7 @@ public class NewsDAO {
 
 	public List<News> getLatestNews(int limit) {
 		List<News> list = new ArrayList<>();
-	    String sql = "SELECT * FROM news ORDER BY PostedDate DESC LIMIT ?"; 
+	    String sql = "SELECT * FROM news ORDER BY Id DESC LIMIT ?"; 
 	    try (Connection conn = DBConnection.getConnection();
 	         PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -199,7 +199,7 @@ public class NewsDAO {
 	
 	public List<News> getAllNewsMoiNhat() {
 	    List<News> list = new ArrayList<>();
-	    String sql = "SELECT * FROM News ORDER BY PostedDate DESC";
+	    String sql = "SELECT * FROM News ORDER BY Id DESC";
 
 	    try (Connection con = DBConnection.getConnection();
 	         PreparedStatement ps = con.prepareStatement(sql);

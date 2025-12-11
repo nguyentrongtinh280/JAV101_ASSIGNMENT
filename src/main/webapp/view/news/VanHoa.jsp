@@ -23,6 +23,71 @@
             height: 60px; 
             width: auto; 
         }
+        
+        
+               .content-container {
+	            display: grid;
+	            grid-template-columns: 3fr 1fr;
+	            gap: 35px; 
+	            max-width: 1200px;
+	            margin: 25px auto;
+	            padding: 0 20px;
+	        }
+	
+	        /* Khối nội dung chính */
+	        .main-content {
+	            background: #ffffff;
+	            padding: 20px 20px; 
+	            border-radius: 10px;
+	            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+	            border: 1px solid #e8e8e8;
+                padding-right: 35px; 
+	        }
+
+	/* CSS DÀNH CHO DANH SÁCH TIN (Giống Index) */
+    .news-item {
+        display: flex;
+        margin-bottom: 30px; 
+        padding-bottom: 25px;
+        border-bottom: 1px dashed #ddd;
+        overflow: hidden; 
+    }
+    .news-item:last-child {
+        border-bottom: none;
+    }
+    
+    .news-item .news-image-list {
+        width: 200px;
+        height: 120px; 
+        object-fit: cover;
+        margin-right: 20px; 
+        border-radius: 5px;
+        flex-shrink: 0; 
+    }
+    
+    .news-item .news-info h3 {
+        font-size: 1.25rem; 
+        margin-bottom: 8px;
+        margin-top: 0;
+    }
+    .news-item .excerpt {
+        color: #555;
+        font-size: 0.95rem;
+        line-height: 1.4;
+        margin-bottom: 8px;
+    }
+    .news-item .meta {
+        font-size: 0.85rem;
+        color: #888;
+        display: block; 
+    }
+	.news-item {
+        display: flex; 
+        margin-bottom: 30px;
+        padding-bottom: 25px;
+        border-bottom: 1px dashed #ddd;
+        overflow: hidden; 
+    }
 </style> 
     <meta charset="UTF-8">
     <title>Tin Văn Hóa</title>
