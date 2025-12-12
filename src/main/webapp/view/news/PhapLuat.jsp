@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="lang.Language" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,149 +11,161 @@
 
 <style>
 /* CSS CHUNG CHO HEADER (Giống trang index) */
-        .header {
-            display: flex; 
-            justify-content: space-between;
-            align-items: center; 
-            padding: 15px 30px; 
-            background-color: #ffffff; 
-            border-bottom: 1px solid #eeeeee; 
-            height: 80px; 
-        }
-        
-        .header-image {
-            height: 60px; 
-            width: auto; 
-        }
-       .content-container {
-	            display: grid;
-	            grid-template-columns: 3fr 1fr;
-	            gap: 35px; 
-	            max-width: 1200px;
-	            margin: 25px auto;
-	            padding: 0 20px;
-	        }
+        .header {
+            display: flex; 
+            justify-content: space-between;
+            align-items: center; 
+            padding: 15px 30px; 
+            background-color: #ffffff; 
+            border-bottom: 1px solid #eeeeee; 
+            height: 80px; 
+        }
+        
+        .header-image {
+            height: 60px; 
+            width: auto; 
+        }
+       .content-container {
+	            display: grid;
+	            grid-template-columns: 3fr 1fr;
+	            gap: 35px; 
+	            max-width: 1200px;
+	            margin: 25px auto;
+	            padding: 0 20px;
+	        }
 	
-	        /* Khối nội dung chính */
-	        .main-content {
-	            background: #ffffff;
-	            padding: 20px 20px; 
-	            border-radius: 10px;
-	            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-	            border: 1px solid #e8e8e8;
-                padding-right: 35px; 
-	        }
+	        /* Khối nội dung chính */
+	        .main-content {
+	            background: #ffffff;
+	            padding: 20px 20px; 
+	            border-radius: 10px;
+	            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+	            border: 1px solid #e8e8e8;
+                padding-right: 35px; 
+	        }
 
 	/* CSS DÀNH CHO DANH SÁCH TIN (Giống Index) */
-    .news-item {
-        display: flex;
-        margin-bottom: 30px; 
-        padding-bottom: 25px;
-        border-bottom: 1px dashed #ddd;
-        overflow: hidden; 
-    }
-    .news-item:last-child {
-        border-bottom: none;
-    }
-    
-    .news-item .news-image-list {
-        width: 200px;
-        height: 120px; 
-        object-fit: cover;
-        margin-right: 20px; 
-        border-radius: 5px;
-        flex-shrink: 0; 
-    }
-    
-    .news-item .news-info h3 {
-        font-size: 1.25rem; 
-        margin-bottom: 8px;
-        margin-top: 0;
-    }
-    .news-item .excerpt {
-        color: #555;
-        font-size: 0.95rem;
-        line-height: 1.4;
-        margin-bottom: 8px;
-    }
-    .news-item .meta {
-        font-size: 0.85rem;
-        color: #888;
-        display: block; 
-    }
+    .news-item {
+        display: flex;
+        margin-bottom: 30px; 
+        padding-bottom: 25px;
+        border-bottom: 1px dashed #ddd;
+        overflow: hidden; 
+    }
+    .news-item:last-child {
+        border-bottom: none;
+    }
+    
+    .news-item .news-image-list {
+        width: 200px;
+        height: 120px; 
+        object-fit: cover;
+        margin-right: 20px; 
+        border-radius: 5px;
+        flex-shrink: 0; 
+    }
+    
+    .news-item .news-info h3 {
+        font-size: 1.25rem; 
+        margin-bottom: 8px;
+        margin-top: 0;
+    }
+    .news-item .excerpt {
+        color: #555;
+        font-size: 0.95rem;
+        line-height: 1.4;
+        margin-bottom: 8px;
+    }
+    .news-item .meta {
+        font-size: 0.85rem;
+        color: #888;
+        display: block; 
+    }
 	.news-item {
-        display: flex; 
-        margin-bottom: 30px;
-        padding-bottom: 25px;
-        border-bottom: 1px dashed #ddd;
-        overflow: hidden; 
-    }
-        
+        display: flex; 
+        margin-bottom: 30px;
+        padding-bottom: 25px;
+        border-bottom: 1px dashed #ddd;
+        overflow: hidden; 
+    }
+        
 </style>
-    <meta charset="UTF-8">
-    <title>Tin Pháp Luật</title>
+    <meta charset="UTF-8">
+    <title><fmt:message key="phapluat"/></title>
+
 </head>
 
 <body>
 
 <header class="header">
-    <img src="${pageContext.request.contextPath}/img/lgo.png" class="header-image">
-    <%-- <div class="header-login">
-        <a href="${pageContext.request.contextPath}/logout">Đăng Xuất</a>
-    </div> --%>
+    <img src="${pageContext.request.contextPath}/img/lgo.png" class="header-image">
+    <div class="header-login">
+        <%-- ĐÃ GIẢI QUYẾT XUNG ĐỘT: Sử dụng c:choose để chọn Đăng Xuất HOẶC Đăng Nhập (i18n) --%>
+        <c:choose>
+            <c:when test="${sessionScope.user != null}">
+                <a href="${pageContext.request.contextPath}/logout">Đăng Xuất</a>
+            </c:when>
+            <c:otherwise>
+                <a href="${pageContext.request.contextPath}/login"><fmt:message key="menu.login"/></a>
+            </c:otherwise>
+        </c:choose>
+    </div>
 </header>
 
 <jsp:include page="/menu.jsp" />
 
 <main class="content-container">
 
-    <section class="main-content">
+    <section class="main-content">
 
-        <h2 style="margin-bottom: 25px; font-family:'Playfair Display', serif;">
-            Tin Pháp Luật
-        </h2>
+        <h2 style="margin-bottom: 25px; font-family:'Playfair Display', serif;">
+            <%-- ĐÃ SỬA: Bỏ thẻ <p> bao quanh fmt:message --%>
+            <fmt:message key="phapluat"/>
+        </h2>
 
-        <c:choose>
+        <c:choose>
 
-            <c:when test="${not empty phapLuatList}">
-                <c:forEach var="item" items="${phapLuatList}">
-                    <article class="news-list-item">
+            <c:when test="${not empty phapLuatList}">
+                <c:forEach var="item" items="${phapLuatList}">
+                    <%-- ĐÃ SỬA: Đổi class từ news-list-item thành news-item để khớp với CSS --%>
+                    <article class="news-item">
 
-                        <img src="${pageContext.request.contextPath}/upload_img/news/${item.image}"
-                             class="news-image-list">
+                        <img src="${pageContext.request.contextPath}/upload_img/news/${item.image}"
+                             class="news-image-list" alt="${item.title}">
 
-                        <div class="news-info">
+                        <div class="news-info">
 
-                            <h3><a href="chi-tiet-tin?id=${item.id}">${item.title}</a></h3>
+                            <h3><a href="chi-tiet-tin?id=${item.id}">${item.title}</a></h3>
 
-                            <p class="excerpt">
-                                ${fn:substring(item.content, 0, 150)}...
-                            </p>
+                            <p class="excerpt">
+                                ${fn:substring(item.content, 0, 150)}...
+                            </p>
 
-                            <p class="meta">
-                                <fmt:formatDate value="${item.postedDate}" pattern="dd/MM/yyyy" />
-                                | PV Pháp Luật
-                            </p>
-                        </div>
+                            <p class="meta">
+                                <fmt:formatDate value="${item.postedDate}" pattern="dd/MM/yyyy" />
+                                | <%-- ĐÃ SỬA: Bỏ thẻ <p> bên trong meta --%>
+                                <fmt:message key="phapluat.reporter"/>
+                            </p>
+                        </div>
 
-                    </article>
-                </c:forEach>
-            </c:when>
+                    </article>
+                </c:forEach>
+            </c:when>
 
-            <c:otherwise>
-                <p>Hiện chưa có tin pháp luật nào.</p>
-            </c:otherwise>
+            <c:otherwise>
+                <p><fmt:message key="phapluat.empty"/></p>
+            </c:otherwise>
 
-        </c:choose>
+        </c:choose>
 
-    </section>
+    </section>
 
-    <jsp:include page="/sidebar.jsp" />
+    <jsp:include page="/sidebar.jsp" />
 
 </main>
 
 <footer class="footer">
-    <p>Góc Nhìn Báo Chí</p>
+    <p><fmt:message key="footer.text"/></p>
 </footer>
 
 </body>
