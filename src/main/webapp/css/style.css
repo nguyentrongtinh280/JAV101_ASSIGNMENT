@@ -2,9 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;700;900&display=swap');
 
 :root {
-    --primary: #c00000;        /* Đỏ đậm VTC style */
-    --secondary: #1a202c;      /* Đen than */
-    --bg-body: #f7f9fc;        /* Xám xanh rất nhạt (mát mắt) */
+    --primary: #c00000;
+    --secondary: #1a202c;
+    --bg-body: #f7f9fc;
     --bg-card: #ffffff;
     --text-main: #2d3748;
     --text-sub: #718096;
@@ -28,7 +28,7 @@ ul { padding: 0; margin: 0; list-style: none; }
 /* ================= HEADER SANG TRỌNG ================= */
 .header {
     background: var(--bg-card);
-    padding: 15px 5%; /* Rộng ra 2 bên */
+    padding: 15px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -56,39 +56,32 @@ ul { padding: 0; margin: 0; list-style: none; }
 
 /* ================= MENU NAV TỐI ƯU & HOÀN HẢO ================= */
 .main-nav {
-    background: var(--secondary); /* Màu nền cố định */
+    background: var(--secondary);
     position: sticky;
     top: 0;
     z-index: 999;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* Shadow nhẹ, chuyên nghiệp */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
 .main-nav ul {
-    /* RESET CƠ BẢN */
-    list-style: none; /* Bỏ dấu chấm mặc định */	
-    margin: 0;       /* Bỏ margin mặc định của UL */
-    padding: 0;      /* Bỏ padding mặc định của UL */
-    
-    /* CĂN CHỈNH FLEXBOX */
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
-    justify-content: center; /* Căn giữa các mục menu theo chiều ngang */
-    align-items: stretch; /* Đảm bảo các LI/A chiếm hết chiều cao, nếu cần */
+    justify-content: center;
+    align-items: stretch;
 }
 
 .main-nav li a {
-    /* ĐẢM BẢO BLOCK CHO PADDING */
-    display: block; 
-    
+    display: block;
     padding: 18px 25px;
     color: rgba(255,255,255,0.8);
     font-weight: 500;
     font-size: 0.95rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    text-decoration: none; /* Bỏ gạch chân mặc định của link */
+    text-decoration: none;
     position: relative;
-    
-    /* TRANSITION GỘP */
     transition: color 0.3s, font-weight 0.3s, background-color 0.3s;
 }
 
@@ -96,37 +89,27 @@ ul { padding: 0; margin: 0; list-style: none; }
 .main-nav li a::after {
     content: '';
     position: absolute;
-    bottom: 0; 
+    bottom: 0;
     left: 50%;
-    width: 0; 
+    width: 0;
     height: 3px;
     background: #0080c0;
-    
-    /* CHỈ ĐỊNH RÕ transition cho width và sử dụng ease-in-out cho mượt hơn */
-    transition: width 0.3s ease-in-out; 
+    transition: width 0.3s ease-in-out;
     transform: translateX(-50%);
 }
 
 .main-nav li a:hover,
-.main-nav li.active a { 
-    color: #fff; 
+.main-nav li.active a {
+    color: #fff;
     font-weight: 700;
-    /* THÊM: Có thể làm mờ nền khi hover để nổi bật hơn */
-    background-color: rgba(0, 0, 0, 10); 
+    background-color: rgba(0, 0, 0, 10);
 }
 
 .main-nav li a:hover::after,
-.main-nav li.active a::after { 
-    width: 100%; 
+.main-nav li.active a::after {
+    width: 100%;
 }
 /* ================= LAYOUT CHÍNH ================= */
-.content-container {
-    display: flex;
-    width: 92%;
-    max-width: 1280px;
-    margin: 40px auto;
-    gap: 40px;
-}
 
 .main-content { flex: 2.5; }
 .sidebar { flex: 1; display: flex; flex-direction: column; gap: 30px; }
@@ -136,10 +119,10 @@ ul { padding: 0; margin: 0; list-style: none; }
 .news-item {
     background: var(--bg-card);
     border-radius: var(--radius);
-    overflow: hidden; /* Để cắt ảnh khi zoom */
+    overflow: hidden;
     box-shadow: var(--shadow-soft);
     margin-bottom: 40px;
-    position: relative; /* Để đặt tag Category lên trên */
+    position: relative;
 }
 
 /* Vùng chứa ảnh có hiệu ứng zoom */
@@ -150,22 +133,22 @@ ul { padding: 0; margin: 0; list-style: none; }
 
 .news-item .news-image {
     width: 100%;
-    height: 450px; /* Ảnh cao hơn, đẹp hơn */
+    height: 450px;
     object-fit: cover;
     display: block;
     transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .news-item:hover .news-image {
-    transform: scale(0.98); /* Zoom ảnh nhẹ khi hover */
+    transform: scale(0.98);
 }
 
 /* Nội dung tin nổi bật */
-.news-item .news-info-highlight { /* Giả sử bạn bọc text trong div này, nếu chưa có thì CSS sẽ style trực tiếp thẻ con */
+.news-item .news-info-highlight {
     padding: 30px;
     position: relative;
     background: #fff;
-    margin-top: -60px; /* Kéo phần text đè lên ảnh một chút */
+    margin-top: -60px;
     margin-left: 30px;
     margin-right: 30px;
     border-radius: 12px;
@@ -175,7 +158,7 @@ ul { padding: 0; margin: 0; list-style: none; }
 /* Tiêu đề tin nổi bật */
 .news-item h3 { margin-top: 0; }
 .news-item h3 a {
-    font-family: 'Playfair Display', serif; /* Font tiêu đề sang trọng */
+    font-family: 'Playfair Display', serif;
     font-size: 2rem;
     font-weight: 700;
     color: var(--secondary);
@@ -227,7 +210,7 @@ ul { padding: 0; margin: 0; list-style: none; }
     color: var(--text-sub);
     font-size: 0.95rem;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Chỉ hiện 2 dòng */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     margin: 10px 0;
@@ -239,6 +222,8 @@ ul { padding: 0; margin: 0; list-style: none; }
     padding: 30px;
     border-radius: var(--radius);
     box-shadow: var(--shadow-soft);
+    /* THÊM LỆNH CÁCH ĐỀU WIDGET */
+    margin-bottom: 30px; 
 }
 
 .widget h3 {
@@ -268,11 +253,11 @@ ul { padding: 0; margin: 0; list-style: none; }
 .hot-news, .new-news, .viewed-news { background: #fff; color: inherit; }
 
 /* STYLE SỐ THỨ TỰ 1, 2, 3 CHO LIST */
-.widget ul { counter-reset: news-rank; } /* Khởi tạo bộ đếm */
+.widget ul { counter-reset: news-rank; }
 
 .widget ul li {
     position: relative;
-    padding: 15px 0 15px 35px; /* Chừa chỗ cho số */
+    padding: 15px 0 15px 35px;
     border-bottom: 1px dashed #edf2f7;
     transition: 0.2s;
 }
@@ -287,15 +272,15 @@ ul { padding: 0; margin: 0; list-style: none; }
     left: 0; top: 15px;
     font-family: 'Playfair Display', serif;
     font-size: 2rem;
-    font-weight: 900; /* Số đậm */
-    color: #e2e8f0; /* Màu số nhạt (xám) */
+    font-weight: 900;
+    color: #e2e8f0;
     line-height: 1;
     font-style: italic;
     transition: 0.3s;
 }
 
 .widget ul li:hover::before {
-    color: var(--primary); /* Hover thì số chuyển màu đỏ */
+    color: var(--primary);
     transform: scale(1.2);
 }
 
@@ -312,31 +297,27 @@ ul { padding: 0; margin: 0; list-style: none; }
 /* ================= FOOTER ================= */
 .footer {
     /* Nền: Xanh Navy rất đậm */
-    background: #102a43; 
+    background: #102a43;
     
     /* Chữ: Xanh Lá cây Tươi hoặc Trắng (chọn màu trắng để dễ đọc nhất) */
-    color: White ; /* Hoặc #4CAF50 nếu bạn muốn màu xanh lá */
+    color: White ;
     
-    padding: 15px 0; /* Tăng padding để footer dày hơn */
+    padding: 15px 0;
     text-align: center;
-    font-size: 16px; /* Giảm font về 16px để cân đối hơn */
-    margin-top: 30px; /* Thêm margin-top để tách biệt với nội dung chính */
-    width: 100%; /* Đảm bảo footer chiếm toàn bộ chiều rộng */
+    font-size: 16px;
+    margin-top: 30px;
+    width: 100%;
 }
 /* ================= SIDEBAR WIDGETS (TOP CHARTS) ================= */
-.sidebar { 
-    flex: 1; 
-    display: flex; 
-    flex-direction: column; 
-    gap: 30px; 
+.sidebar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
-.widget {
-    background: var(--bg-card);
-    padding: 30px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-soft);
-}
+/* Tôi đã BỎ ĐỊNH NGHĨA .widget LẶP LẠI Ở ĐÂY để tránh xung đột và dùng định nghĩa phía trên */
+/* BỎ ĐỊNH NGHĨA: .widget {} */
 
 .widget h3 {
     font-family: 'Inter', sans-serif;
@@ -358,7 +339,7 @@ ul { padding: 0; margin: 0; list-style: none; }
     position: absolute;
     bottom: -2px; left: 0;
     width: 40px; height: 3px;
-    background: var(--primary); 
+    background: var(--primary);
 }
 
 /* 1. TIN ĐƯỢC XEM NHIỀU (Dùng chung cho cả 3 danh sách tin) */
@@ -370,26 +351,26 @@ ul { padding: 0; margin: 0; list-style: none; }
 .most-viewed-list li {
     display: flex;
     align-items: flex-start;
-    padding: 12px 0; 
-    border-bottom: 1px dashed #e2e8f0; 
+    padding: 12px 0;
+    border-bottom: 1px dashed #e2e8f0;
 }
 
-.most-viewed-list li:last-child { 
-    border-bottom: none; 
-    padding-bottom: 0; 
+.most-viewed-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
 }
 
 /* Số thứ tự (Rank Number) */
 .most-viewed-list .rank-number {
     font-family: 'Playfair Display', serif;
-    font-size: 1.7rem; 
+    font-size: 1.7rem;
     font-weight: 900;
-    color: var(--primary); 
-    width: 35px; 
+    color: var(--primary);
+    width: 35px;
     text-align: center;
     margin-right: 15px;
     line-height: 1;
-    font-style: italic; 
+    font-style: italic;
     transition: 0.3s;
 }
 
@@ -401,8 +382,8 @@ ul { padding: 0; margin: 0; list-style: none; }
     line-height: 1.4;
 }
 
-.most-viewed-list li a:hover { 
-    color: var(--primary); 
+.most-viewed-list li a:hover {
+    color: var(--primary);
     text-decoration: underline;
 }
 
@@ -410,63 +391,64 @@ ul { padding: 0; margin: 0; list-style: none; }
    2. ĐĂNG KÝ NEWSLETTER (Đã tối ưu và chỉnh Hover)
    =================================== */
 .newsletter {
-    background: var(--primary); 
-    padding: 35px 30px; 
+    background: var(--primary);
+    padding: 35px 30px;
     border-radius: var(--radius);
     text-align: center;
-    box-shadow: 0 8px 20px rgba(192, 0, 0, 0.5); 
-    color: #ffffff; 
-    margin-top: 20px; 
+    box-shadow: 0 8px 20px rgba(192, 0, 0, 0.5);
+    color: #ffffff;
+    margin-top: 20px;
+    margin-bottom: 30px; /* Thêm margin-bottom cho newsletter nếu nó là widget cuối cùng */
 }
 
 /* Tiêu đề Widget trên nền đỏ */
 .newsletter h3 {
-    color: #ffffff; 
-    font-size: 1.45rem; 
+    color: #ffffff;
+    font-size: 1.45rem;
     font-weight: 700;
-    padding-bottom: 5px; 
-    margin-bottom: 10px; 
-    border-bottom: 3px solid #ffffff; 
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: 3px solid #ffffff;
     display: inline-block;
 }
 
 .newsletter h3::after {
-    content: none; /* Bỏ gạch chân đỏ nhỏ mặc định của widget */
+    content: none;
 }
 
 .newsletter p {
-    font-size: 1rem; 
-    color: rgba(255, 255, 255, 0.85); 
-    margin-bottom: 25px; 
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 25px;
 }
 
 /* Form input */
 .newsletter-form .form-control {
-    border-radius: 6px; 
-    font-size: 1rem; 
-    height: 48px; 
+    border-radius: 6px;
+    font-size: 1rem;
+    height: 48px;
     border: 1px solid #ccc;
     background-color: #ffffff;
     text-align: left;
-    padding: 10px 15px; 
+    padding: 10px 15px;
 }
 
 /* Nút bấm */
 .newsletter-form .btn-danger {
-    background-color: #ffffff; 
-    color: var(--primary); 
+    background-color: #ffffff;
+    color: var(--primary);
     border: 1px solid #ffffff;
     font-weight: 700;
-    font-size: 1.1rem; 
-    padding: 12px 0; 
-    margin-top: 18px; 
+    font-size: 1.1rem;
+    padding: 12px 0;
+    margin-top: 18px;
     transition: all 0.2s ease;
-    width: 100%; 
+    width: 100%;
 }
 
 .newsletter-form .btn-danger:hover {
     /* SỬA HOVER: Dùng màu nền đỏ nhạt/hồng nhẹ (dễ nhìn) */
-    background-color: #ffcccc; /* Màu đỏ nhạt */
-    color: var(--primary); /* Giữ màu chữ đỏ đậm */
+    background-color: #ffcccc;
+    color: var(--primary);
     border-color: #ffcccc;
 }

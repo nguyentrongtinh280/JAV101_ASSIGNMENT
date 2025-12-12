@@ -24,8 +24,6 @@
             height: 60px; 
             width: auto; 
         }
-<<<<<<< Updated upstream
-=======
                .content-container {
 	            display: grid;
 	            grid-template-columns: 3fr 1fr;
@@ -89,7 +87,7 @@
         border-bottom: 1px dashed #ddd;
         overflow: hidden; 
     }
->>>>>>> Stashed changes
+
 </style> 
     <meta charset="UTF-8">
     <title>Tin Văn Hóa</title>
