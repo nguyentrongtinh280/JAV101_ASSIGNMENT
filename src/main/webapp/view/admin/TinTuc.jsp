@@ -275,6 +275,7 @@
 	            document.getElementById('author').value = row.dataset.author;
 	            
 	            // Đảm bảo chọn đúng giá trị trong dropdown Category
+	            // Đảm bảo chọn đúng giá trị trong dropdown Category// Đảm bảo chọn đúng giá trị trong dropdown Category
 	            document.getElementById('categoryid').value = row.dataset.categoryid;
 
 	            var currentImage = row.dataset.image;
