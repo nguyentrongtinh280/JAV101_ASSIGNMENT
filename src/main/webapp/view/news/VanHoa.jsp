@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="lang.Language" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +24,72 @@
             height: 60px; 
             width: auto; 
         }
+<<<<<<< Updated upstream
+=======
+               .content-container {
+	            display: grid;
+	            grid-template-columns: 3fr 1fr;
+	            gap: 35px; 
+	            max-width: 1200px;
+	            margin: 25px auto;
+	            padding: 0 20px;
+	        }
+	
+	        /* Khối nội dung chính */
+	        .main-content {
+	            background: #ffffff;
+	            padding: 20px 20px; 
+	            border-radius: 10px;
+	            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+	            border: 1px solid #e8e8e8;
+                padding-right: 35px; 
+	        }
+
+	/* CSS DÀNH CHO DANH SÁCH TIN (Giống Index) */
+    .news-item {
+        display: flex;
+        margin-bottom: 30px; 
+        padding-bottom: 25px;
+        border-bottom: 1px dashed #ddd;
+        overflow: hidden; 
+    }
+    .news-item:last-child {
+        border-bottom: none;
+    }
+    
+    .news-item .news-image-list {
+        width: 200px;
+        height: 120px; 
+        object-fit: cover;
+        margin-right: 20px; 
+        border-radius: 5px;
+        flex-shrink: 0; 
+    }
+    
+    .news-item .news-info h3 {
+        font-size: 1.25rem; 
+        margin-bottom: 8px;
+        margin-top: 0;
+    }
+    .news-item .excerpt {
+        color: #555;
+        font-size: 0.95rem;
+        line-height: 1.4;
+        margin-bottom: 8px;
+    }
+    .news-item .meta {
+        font-size: 0.85rem;
+        color: #888;
+        display: block; 
+    }
+	.news-item {
+        display: flex; 
+        margin-bottom: 30px;
+        padding-bottom: 25px;
+        border-bottom: 1px dashed #ddd;
+        overflow: hidden; 
+    }
+>>>>>>> Stashed changes
 </style> 
     <meta charset="UTF-8">
     <title>Tin Văn Hóa</title>
@@ -34,7 +101,7 @@
 <header class="header">
     <img src="${pageContext.request.contextPath}/img/lgo.png" class="header-image">
     <div class="header-login">
-        <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
+        <a href="${pageContext.request.contextPath}/login"><fmt:message key="menu.login"/></a>
     </div>
 </header>
 
@@ -45,7 +112,7 @@
     <section class="main-content">
 
         <h2 style="margin-bottom: 25px; font-family:'Playfair Display', serif;">
-            Tin Văn Hóa
+            <fmt:message key="vanhoa"/>
         </h2>
 
         <c:choose>
@@ -65,7 +132,7 @@
 
                             <p class="meta">
                                 <fmt:formatDate value="${item.postedDate}" pattern="dd/MM/yyyy" />
-                                | PV Văn Hóa
+                                | <fmt:message key="vanhoa.reporter"/>
                             </p>
                         </div>
                     </article>
@@ -73,7 +140,7 @@
             </c:when>
 
             <c:otherwise>
-                <p>Hiện chưa có tin văn hóa nào.</p>
+                <p><fmt:message key="vanhoa.empty"/></p>
             </c:otherwise>
 
         </c:choose>
@@ -85,7 +152,7 @@
 </main>
 
 <footer class="footer">
-    <p>Góc Nhìn Báo Chí</p>
+    <p><fmt:message key="footer.text"/></p>
 </footer>
 
 </body>
