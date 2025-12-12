@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="lang.Language" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -90,7 +91,7 @@
     }
 </style>
     <meta charset="UTF-8">
-    <title>Tin Thời Sự</title>
+    <title><fmt:message key="thoisu.title" /></title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
      <link rel="stylesheet" href="css/style.css">
 </head>
@@ -100,7 +101,7 @@
     <img src="${pageContext.request.contextPath}/img/lgo.png" alt="Logo ABC News" class="header-image">
 
     <div class="header-login">
-        <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
+        <a href="${pageContext.request.contextPath}/login"><fmt:message key="menu.login"/></a>
     </div>
 </header>
 <jsp:include page="/menu.jsp" />
@@ -108,7 +109,7 @@
     <section class="main-content">
 
         <h2 style="margin-bottom: 25px; font-family:'Playfair Display', serif;">
-            Tin Thời Sự
+            <fmt:message key="thoisu.title" />
         </h2>
 
         <c:choose>
@@ -145,7 +146,7 @@
             </c:when>
 
             <c:otherwise>
-                <p>Hiện chưa có tin thời sự nào.</p>
+                <p><fmt:message key="thoisu.empty" /></p>
             </c:otherwise>
 
         </c:choose>
@@ -157,7 +158,7 @@
 </main>
 
 <footer class="footer">
-    <p>Góc Nhìn Báo Chí</p>
+    <p><fmt:message key="footer.text"/></p>
 </footer>
 
 </body>

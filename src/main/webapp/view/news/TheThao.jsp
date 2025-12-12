@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="lang.Language" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -91,7 +92,7 @@
 </style>
 
     <meta charset="UTF-8">
-    <title>Tin Thể Thao</title>
+    <title><fmt:message key="news.sports"/></title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 
@@ -100,7 +101,7 @@
 <header class="header">
     <img src="${pageContext.request.contextPath}/img/lgo.png" class="header-image">
     <div class="header-login">
-        <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
+        <a href="${pageContext.request.contextPath}/login"><fmt:message key="menu.login"/></a>
     </div>
 </header>
 
@@ -111,7 +112,7 @@
     <section class="main-content">
 
         <h2 style="margin-bottom: 25px; font-family:'Playfair Display', serif;">
-            Tin Thể Thao
+            <fmt:message key="news.sports"/>
         </h2>
 
         <c:choose>
@@ -132,7 +133,7 @@
 
                             <p class="meta">
                                 <fmt:formatDate value="${item.postedDate}" pattern="dd/MM/yyyy" />
-                                | PV Thể Thao
+                                | <fmt:message key="news.reporter.sports"/>
                             </p>
                         </div>
 
@@ -141,7 +142,7 @@
             </c:when>
 
             <c:otherwise>
-                <p>Hiện chưa có tin thể thao nào.</p>
+                <p><fmt:message key="news.no.sports"/></p>
             </c:otherwise>
 
         </c:choose>
@@ -153,7 +154,7 @@
 </main>
 
 <footer class="footer">
-    <p>Góc Nhìn Báo Chí</p>
+    <p><fmt:message key="footer.text"/></p>
 </footer>
 
 </body>

@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="lang.Language" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -92,8 +93,9 @@
 
 </style>
     <meta charset="UTF-8">
-    <title>Tin Giáo Dục</title>
+    <title><fmt:message key="menu.education1"/></title>
     </head>
+
 
 <body>
 
@@ -101,7 +103,7 @@
     <img src="${pageContext.request.contextPath}/img/lgo.png" alt="Logo ABC News" class="header-image">
 
     <div class="header-login">
-        <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
+        <a href="${pageContext.request.contextPath}/login"><fmt:message key="menu.login"/></a>
     </div>
 </header>
 
@@ -112,7 +114,7 @@
     <section class="main-content">
 
         <h2 style="margin-bottom: 25px; font-family:'Playfair Display', serif;">
-            Tin Giáo Dục
+            <fmt:message key="menu.education1"/>
         </h2>
 
         <c:choose>
@@ -138,7 +140,7 @@
 
                             <p class="meta">
                                 <fmt:formatDate value="${item.postedDate}" pattern="dd/MM/yyyy" />
-                                | Phóng viên Giáo Dục
+                                | <fmt:message key="news.education.reporter"/>
                             </p>
                         </div>
 
@@ -147,7 +149,7 @@
             </c:when>
 
             <c:otherwise>
-                <p>Hiện chưa có tin giáo dục nào.</p>
+                <p><fmt:message key="news.no.education"/></p>
             </c:otherwise>
 
         </c:choose>
@@ -158,9 +160,9 @@
 
 </main>
 
-<footer class="footer">
-    <p>Góc Nhìn Báo Chí</p>
-</footer>
+	<footer class="footer">
+	    <p><fmt:message key="footer.text"/></p>
+	</footer>
 
 </body>
 </html>

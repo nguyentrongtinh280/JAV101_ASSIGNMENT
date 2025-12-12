@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="lang.Language" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,8 +24,6 @@
             height: 60px; 
             width: auto; 
         }
-        
-        
                .content-container {
 	            display: grid;
 	            grid-template-columns: 3fr 1fr;
@@ -88,6 +87,7 @@
         border-bottom: 1px dashed #ddd;
         overflow: hidden; 
     }
+
 </style> 
     <meta charset="UTF-8">
     <title>Tin Văn Hóa</title>
@@ -99,7 +99,7 @@
 <header class="header">
     <img src="${pageContext.request.contextPath}/img/lgo.png" class="header-image">
     <div class="header-login">
-        <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
+        <a href="${pageContext.request.contextPath}/login"><fmt:message key="menu.login"/></a>
     </div>
 </header>
 
@@ -110,7 +110,7 @@
     <section class="main-content">
 
         <h2 style="margin-bottom: 25px; font-family:'Playfair Display', serif;">
-            Tin Văn Hóa
+            <fmt:message key="vanhoa"/>
         </h2>
 
         <c:choose>
@@ -130,7 +130,7 @@
 
                             <p class="meta">
                                 <fmt:formatDate value="${item.postedDate}" pattern="dd/MM/yyyy" />
-                                | PV Văn Hóa
+                                | <fmt:message key="vanhoa.reporter"/>
                             </p>
                         </div>
                     </article>
@@ -138,7 +138,7 @@
             </c:when>
 
             <c:otherwise>
-                <p>Hiện chưa có tin văn hóa nào.</p>
+                <p><fmt:message key="vanhoa.empty"/></p>
             </c:otherwise>
 
         </c:choose>
@@ -150,7 +150,7 @@
 </main>
 
 <footer class="footer">
-    <p>Góc Nhìn Báo Chí</p>
+    <p><fmt:message key="footer.text"/></p>
 </footer>
 
 </body>
