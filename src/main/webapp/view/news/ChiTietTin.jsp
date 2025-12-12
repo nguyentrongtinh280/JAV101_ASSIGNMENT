@@ -133,9 +133,9 @@
 	    <img src="${pageContext.request.contextPath}/img/lgo.png"
 	         alt="Logo ABC News" class="header-image">
 	
-	    <div class="header-login">
-	        <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
-	    </div>
+	    <%-- <div class="header-login">
+        <a href="${pageContext.request.contextPath}/logout">Đăng Xuất</a>
+	    </div> --%>
 	</header>
 	
 	<jsp:include page="/menu.jsp" />

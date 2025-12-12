@@ -101,7 +101,7 @@
     <img src="${pageContext.request.contextPath}/img/lgo.png" alt="Logo ABC News" class="header-image">
 
     <div class="header-login">
-        <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
+        <a href="${pageContext.request.contextPath}/logout">Đăng Xuất</a>
     </div>
 </header>
 
