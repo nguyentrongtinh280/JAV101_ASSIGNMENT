@@ -4,7 +4,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="DAO.NewsDAO" %>
 <%@ page import="Entity.News" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <fmt:setLocale value="${sessionScope.lang}" />
 <fmt:setBundle basename="lang.Language" />

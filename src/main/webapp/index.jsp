@@ -18,31 +18,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     
     <style>
-        .header {
-            display: flex; 
-            justify-content: space-between;
-            align-items: center; 
-            padding: 15px 30px; 
-            background-color: #ffffff; 
-            border-bottom: 1px solid #eeeeee; 
-            height: 80px; 
-        }
-        .header-image {
-            height: 60px; 
-            width: auto; 
-        }
-        .header-login {
-            display: flex;
-            align-items: center;
-            font-size: 1.05rem;
-        }
-        .header-login a {
-            text-decoration: none;
-            margin: 0 5px; 
-        }
-        .header-login strong {
-            color: #333; 
-        }
         .alert-container {
             max-width: 90%; 
             margin: 15px auto 0 auto; 
@@ -96,12 +71,6 @@
         }
         .news-info .meta span {
             flex-grow: 1;
-        }
-        .footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #f8f8f8;
-            border-top: 1px solid #eee;
         }
         @media (max-width: 992px) {
             .content-container {
