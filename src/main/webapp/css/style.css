@@ -26,6 +26,7 @@ a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
 ul { padding: 0; margin: 0; list-style: none; }
 
 /* ================= HEADER SANG TRỌNG ================= */
+/* ================= HEADER DÙNG CHUNG ================= */
 .header {
     background: var(--bg-card);
     padding: 15px 5%;
@@ -33,26 +34,44 @@ ul { padding: 0; margin: 0; list-style: none; }
     justify-content: space-between;
     align-items: center;
     box-shadow: var(--shadow-soft);
-    position: relative;
-    z-index: 100;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
+.header-image {
+    height: 60px;
+    width: auto;
+}
 
+.header-login {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+}
+
+.header-login strong {
+    margin-left: 5px;
+    color: var(--secondary);
+}
+
+/* Nút đăng nhập / đăng xuất */
 .header-login a {
-    font-family: 'Inter', sans-serif;
-    color: var(--primary);
-    background: rgba(192, 0, 0, 0.05);
-    padding: 10px 25px;
-    border-radius: 50px;
+    color: #fff;
+    background: var(--primary);
+    padding: 8px 20px;
+    border-radius: 30px;
     font-weight: 600;
-    border: 1px solid transparent;
+    font-size: 0.9rem;
+    transition: 0.3s;
 }
 
 .header-login a:hover {
-    background: var(--primary);
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(192, 0, 0, 0.3);
+    background: #a00000;
+    box-shadow: 0 4px 10px rgba(192,0,0,0.35);
 }
+
 
 /* ================= MENU NAV TỐI ƯU & HOÀN HẢO ================= */
 .main-nav {
@@ -295,19 +314,21 @@ ul { padding: 0; margin: 0; list-style: none; }
 .widget ul li a:hover { color: var(--primary); }
 
 /* ================= FOOTER ================= */
+/* ================= FOOTER DÙNG CHUNG ================= */
 .footer {
-    /* Nền: Xanh Navy rất đậm */
     background: #102a43;
-    
-    /* Chữ: Xanh Lá cây Tươi hoặc Trắng (chọn màu trắng để dễ đọc nhất) */
-    color: White ;
-    
-    padding: 15px 0;
+    color: #ffffff;
+    padding: 18px 0;
     text-align: center;
-    font-size: 16px;
-    margin-top: 30px;
-    width: 100%;
+    font-size: 0.95rem;
+    margin-top: 40px;
 }
+
+.footer p {
+    margin: 0;
+    opacity: 0.9;
+}
+
 /* ================= SIDEBAR WIDGETS (TOP CHARTS) ================= */
 .sidebar {
     flex: 1;

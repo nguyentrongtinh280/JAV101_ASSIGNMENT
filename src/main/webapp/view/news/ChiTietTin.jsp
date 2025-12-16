@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c"   uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <%-- 1. THIẾT LẬP ĐA NGÔN NGỮ (TỪ DEVELOP) --%>
 <fmt:setLocale value="${sessionScope.lang}" />
@@ -14,22 +14,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 
     <style>
-    /* CSS CHUNG CHO HEADER (Giống trang index) */
-        .header {
-            display: flex; 
-            justify-content: space-between;
-            align-items: center; 
-            padding: 15px 30px; 
-            background-color: #ffffff; 
-            border-bottom: 1px solid #eeeeee; 
-            height: 80px; 
-        }
-        
-        /* Điều chỉnh kích thước Logo */
-        .header-image {
-            height: 60px; 
-            width: auto; 
-        }
         .content-container {
             display: grid;
             grid-template-columns: 3fr 1fr;
@@ -124,15 +108,24 @@
 <body>
 
 <header class="header">
-    <img src="${pageContext.request.contextPath}/img/lgo.png"
-         alt="Logo" class="header-image">
-    
-    <%-- NÚT ĐĂNG NHẬP (TỪ DEVELOP) --%>
-    <div class="header-login">
-        <a href="${pageContext.request.contextPath}/login">
-            <fmt:message key="detail.login" />
-        </a>
-    </div>
+	    <img src="${pageContext.request.contextPath}/img/lgo.png" alt="Logo" class="header-image">
+	
+	    <div class="header-login">
+	        <c:choose>
+	            <c:when test="${not empty sessionScope.loggedInUser}">
+	                <fmt:message key="home.hello"/> 
+	                <strong>${sessionScope.loggedInUser.fullname}</strong>
+	                <a href="${pageContext.request.contextPath}/logout" class="btn btn-sm btn-danger ms-2">
+	                    <fmt:message key="home.logout"/>
+	                </a>
+	            </c:when>
+	            <c:otherwise>
+	                <a href="${pageContext.request.contextPath}/login" class="btn btn-sm btn-primary">
+	                    <fmt:message key="home.login"/>
+	                </a>
+	            </c:otherwise>
+	        </c:choose>
+	    </div>
 </header>
 
 <jsp:include page="/menu.jsp" />
