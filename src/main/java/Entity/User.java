@@ -1,6 +1,6 @@
 package Entity;
 
-import java.sql.Date; 
+import java.sql.Date; // Hoặc java.util.Date nếu cần
 
 public class User {
 	private int id;
@@ -76,7 +76,4 @@ public class User {
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
-    
-    
-    
 }

@@ -10,13 +10,12 @@ public class DBConnection {
     private static String user = "root";      // thay bằng user MySQL của bạn
     private static String password = "tinh1511"; // thay bằng mật khẩu MySQL
 
+
     public static Connection getConnection() throws Exception {
         Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection(url, user, password);
     }
-    
-    
-    // Tạo PreparedStatement (cho phép truyền tham số)
+ // Tạo PreparedStatement (cho phép truyền tham số)
     public static PreparedStatement getStmt(String sql, Object... args) throws Exception {
         Connection conn = getConnection(); 
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -67,5 +66,4 @@ public class DBConnection {
             throw new RuntimeException(e);
         }
     }
-
 }

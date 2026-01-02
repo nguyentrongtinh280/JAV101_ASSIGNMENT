@@ -1,76 +1,99 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
+         trimDirectiveWhitespaces="true" %>
+
+<%@ taglib prefix="c" uri="jakarta.tags.core" %> 
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %> 
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %> >
+
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="lang.Language" />
+
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<title>Tin Văn Hóa</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <style>
-   /* 1. Căn chỉnh Header (Sử dụng Flexbox) */
-        .header {
-            display: flex; 
-            justify-content: space-between; /* Đẩy logo và nút đăng nhập ra hai bên */
-            align-items: center; /* Căn giữa theo chiều dọc - GIÚP HÌNH THẲNG HÀNG */
-            padding: 15px 30px; 
-            background-color: #ffffff; 
-            border-bottom: 1px solid #eeeeee; 
-            height: 80px; /* Chiều cao cố định cho header */
-        }
-
-        /* 2. Điều chỉnh kích thước Logo cho VỪA PHẢI */
-        .header-image {
-            height: 120px; /* Chiều cao tối đa vừa phải */
-            width: 150px; /* Giữ tỷ lệ khung hình */
-        }
-        
+body { margin:0; font-family:Arial,sans-serif; background:#f3f4f6; }
+.content-container {
+    display:grid; grid-template-columns:3fr 1fr; gap:35px;
+    max-width:1200px; margin:25px auto; padding:0 20px;
+}
+.main-content {
+    background:#fff; padding:20px 35px 20px 20px;
+    border-radius:10px; border:1px solid #e8e8e8;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+.news-item {
+    display:flex; gap:20px; margin-bottom:30px;
+    padding-bottom:25px; border-bottom:1px dashed #ddd;
+}
+.news-image-list {
+    width:200px; height:120px; object-fit:cover; border-radius:5px;
+}
+.news-info h3 { margin:0 0 8px; font-size:1.25rem; }
+.excerpt { font-size:.95rem; color:#555; }
+.meta { font-size:.85rem; color:#888; }
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <title>Danh sách tin tức</title>
-    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<header class="header">
-    	<img src="img/lgo.png" alt="Logo ABC News" class="header-image">
-        
-        <div class="header-login">
-            <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
-        </div>
-        
-    </header>
+	<header class="header">
+	    <img src="${pageContext.request.contextPath}/img/lgo.png" alt="Logo" class="header-image">
 	
-	<jsp:include page="/menu.jsp" />
-	
-	<main class="content-container">
-	    <section class="main-content">
-			<!-- Tin Văn hóa -->
-			<article class="news-list-item">
-			    <img src="img/hinh4.png" class="news-image-list">
-			    <div class="news-info">
-			        <h3><a href="detail.jsp?id=vh1">Sự kiện văn hóa đặc sắc 2025</a></h3>
-			        <p class="excerpt">Một số hoạt động văn hóa nổi bật diễn ra trong năm...</p>
-			        <p class="meta">20/11/2025 | PV Văn Hóa 1</p>
-			    </div>
-			</article>
-			
-			<article class="news-list-item">
-			    <img src="img/hinh5.png" class="news-image-list">
-			    <div class="news-info">
-			        <h3><a href="detail.jsp?id=vh2">Lễ hội truyền thống khắp 3 miền</a></h3>
-			        <p class="excerpt">Truyền thống văn hóa Việt Nam luôn được lưu giữ...</p>
-			        <p class="meta">19/11/2025 | PV Văn Hóa 2</p>
-			    </div>
-			</article>
-	
-	    </section>
-	
-	    <jsp:include page="/sidebar.jsp" />
-	
-	</main>
-	
-	<footer class="footer">
-	        <p>Góc Nhìn Báo Chí</p>
-    </footer>
+	    <div class="header-login">
+	        <c:choose>
+	            <c:when test="${not empty sessionScope.loggedInUser}">
+	                <fmt:message key="home.hello"/> 
+	                <strong>${sessionScope.loggedInUser.fullname}</strong>
+	                <a href="${pageContext.request.contextPath}/logout" class="btn btn-sm btn-danger ms-2">
+	                    <fmt:message key="home.logout"/>
+	                </a>
+	            </c:when>
+	            <c:otherwise>
+	                <a href="${pageContext.request.contextPath}/login" class="btn btn-sm btn-primary">
+	                    <fmt:message key="home.login"/>
+	                </a>
+	            </c:otherwise>
+	        </c:choose>
+	    </div>
+	</header>
+
+<jsp:include page="/menu.jsp"/>
+
+<main class="content-container">
+<section class="main-content">
+
+<h2><fmt:message key="vanhoa"/></h2>
+
+<c:choose><c:when test="${not empty vanHoaList}">
+<c:forEach var="item" items="${vanHoaList}">
+<article class="news-item">
+<img class="news-image-list"
+     src="${pageContext.request.contextPath}/upload_img/news/${item.image}">
+<div class="news-info">
+<h3><a href="chi-tiet-tin?id=${item.id}">${item.title}</a></h3>
+<p class="excerpt">${fn:substring(item.content,0,150)}...</p>
+<p class="meta">
+<fmt:formatDate value="${item.postedDate}" pattern="dd/MM/yyyy"/>
+ | <fmt:message key="vanhoa.reporter"/>
+</p>
+</div>
+</article>
+</c:forEach>
+</c:when><c:otherwise>
+<p><fmt:message key="vanhoa.empty"/></p>
+</c:otherwise></c:choose>
+
+</section>
+<jsp:include page="/sidebar.jsp"/>
+</main>
+
+<footer class="footer">
+<p><fmt:message key="footer.text"/></p>
+</footer>
 
 </body>
 </html>

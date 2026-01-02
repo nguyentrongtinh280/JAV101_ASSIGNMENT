@@ -76,7 +76,7 @@ public class NguoiDungController extends HttpServlet {
                 req.setAttribute("error", "Email không hợp lệ.");
             } else if (password.isEmpty() && "insert".equals(action)) { 
                 req.setAttribute("error", "Mật khẩu không được để trống.");
-            } else if (!password.equals(confirm)) {
+} else if (!password.equals(confirm)) {
                 req.setAttribute("error", "Mật khẩu xác nhận không khớp!");
             } else if (mobile.isEmpty()) {
                 req.setAttribute("error", "Số điện thoại không được để trống.");
@@ -140,8 +140,7 @@ public class NguoiDungController extends HttpServlet {
                     u.setMobile(mobile);
                     u.setGender(genderStr.equals("1") ? 1 : 0);
                     u.setRole(Integer.parseInt(roleStr));
-
-                    if (birthdayStr != null && !birthdayStr.isEmpty()) {
+if (birthdayStr != null && !birthdayStr.isEmpty()) {
                         u.setBirthday(java.sql.Date.valueOf(birthdayStr));
                     }
 
